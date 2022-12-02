@@ -8,10 +8,10 @@ const Dashboard = ({ user }) => {
 
     // check if there is a user logged in, if not nav to login page
     useEffect(() => {
-        if (!user) {
-            navigate('/login');
+        if (Object.entries(user).length === 0) {
+            navigate("/login");
         }
-    }, []);
+    }, [user, navigate]);
 
     return (
         <div className="dashboard">

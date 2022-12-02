@@ -1,13 +1,10 @@
 import { signOut } from "firebase/auth";
-import { useNavigate } from "react-router-dom";
 import { auth } from "../features/firebase/FirebaseConfig";
 
 const Header = ({ logoutUser }) => {
-    const navigate = useNavigate();
-
     const handleClick = () => {
         logoutUser();
-        signOut(auth).then(() => navigate("/login"));
+        signOut(auth);
     };
 
     return (
