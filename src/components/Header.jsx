@@ -7,18 +7,20 @@ const Header = ({ logoutUser, addTask }) => {
     const date = new Date();
 
     // toggle to show / hide menu
-    const handleClick = () => {
+    const handleClick = (catcher) => {
         // logoutUser();
         // signOut(auth);
-        setShowMenu(!showMenu);
+        if (catcher == "toggle" || catcher == "taskForm") {
+            setShowMenu(!showMenu);
+        }
     };
 
     return (
         <div className="header">
-            <p onClick={handleClick}>+</p>
+            <p onClick={() => handleClick("toggle")}>+</p>
             <h1>Daily Planner</h1>
             <p>Date: {date.toDateString()}</p>
-            {showMenu && <TaskForm addTask={addTask} />}
+            {showMenu && <TaskForm addTask={addTask} catcher={handleClick} />}
         </div>
     );
 };

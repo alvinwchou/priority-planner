@@ -1,6 +1,6 @@
 import { useRef } from "react";
 
-const TaskForm = ({ addTask }) => {
+const TaskForm = ({ addTask, catcher }) => {
     const categoryRef = useRef();
     const taskRef = useRef();
 
@@ -13,16 +13,31 @@ const TaskForm = ({ addTask }) => {
         addTask(category, task);
 
         // reset the form
-        categoryRef.current.value = "priority1";
         taskRef.current.value = "";
     };
 
+    // event listener for when user clicks outside the form to close form
+    const handleClick = (e) => {
+        console.log(e.target.className);
+        catcher(e.target.className);
+    };
+
     return (
-        <div className="taskForm">
+        <div className="taskForm" onClick={(e) => handleClick(e)}>
             <form onSubmit={handleSubmit}>
                 <div className="formGroup">
-                    <label htmlFor="category">Choose a category</label>
-                    <select name="category" id="category" ref={categoryRef}>
+                    <label htmlFor="category" className="sr-only">
+                        Choose a category
+                    </label>
+                    <select
+                        name="category"
+                        id="category"
+                        ref={categoryRef}
+                        required
+                    >
+                        <option value="" disabled selected>
+                            Choose a Category
+                        </option>
                         <option value="priority1">Priority 1</option>
                         <option value="priority2">Priority 2</option>
                         <option value="priority3">Priority 3</option>

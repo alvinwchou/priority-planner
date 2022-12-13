@@ -25,8 +25,11 @@ input {
     width: 100%;
 }
 
+button, select {
+    cursor: pointer;
+}
+
 .btn {
     background-color: transparent;
     border: none;
-    cursor: pointer;
 }
