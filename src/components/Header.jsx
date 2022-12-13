@@ -1,10 +1,10 @@
-import { signOut } from "firebase/auth";
 import { useState } from "react";
-import { auth } from "../features/firebase/FirebaseConfig";
 import TaskForm from "./TaskForm";
 
 const Header = ({ logoutUser, addTask }) => {
     const [showMenu, setShowMenu] = useState(false);
+
+    const date = new Date();
 
     // toggle to show / hide menu
     const handleClick = () => {
@@ -17,7 +17,7 @@ const Header = ({ logoutUser, addTask }) => {
         <div className="header">
             <p onClick={handleClick}>+</p>
             <h1>Daily Planner</h1>
-            <p>Date: Today's date</p>
+            <p>Date: {date.toDateString()}</p>
             {showMenu && <TaskForm addTask={addTask} />}
         </div>
     );

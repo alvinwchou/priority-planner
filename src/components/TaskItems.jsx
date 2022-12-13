@@ -1,16 +1,27 @@
-const TaskItems = ({ usersTasks }) => {
+import { RiCloseFill } from "react-icons/ri";
+
+const TaskItems = ({ tasks, category, deleteTask }) => {
     // create empty array to hold the task
     const taskList = [];
 
-    // changing the usersTasks from object to an array
-    for (const key in usersTasks) {
-        taskList.push({ key: key, task: usersTasks[key] });
-    }
+    const handleClickRemove = (taskKey) => {
+        deleteTask(category, taskKey);
+    };
 
     return (
         <div className="taskItems">
-            {taskList.map((task) => {
-                return <p key={task.key}>{task.task}</p>;
+            {tasks?.map((task) => {
+                return (
+                    <div className="taskItem">
+                        <p key={task.key}>{task.task}</p>
+                        <button
+                            className="btn"
+                            onClick={() => handleClickRemove(task.key)}
+                        >
+                            <RiCloseFill />
+                        </button>
+                    </div>
+                );
             })}
         </div>
     );

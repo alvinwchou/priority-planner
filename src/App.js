@@ -7,7 +7,7 @@ import firebase, { auth } from "./features/firebase/FirebaseConfig";
 import Dashboard from "./pages/Dashboard";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
-import { getDatabase, ref, push } from "firebase/database";
+import { getDatabase, ref, push, onValue, remove } from "firebase/database";
 
 function App() {
     const [user, setUser] = useState({});
@@ -15,9 +15,40 @@ function App() {
     useEffect(() => {
         // check if there is a user logged in, if so update state else clear state
         onAuthStateChanged(auth, (currentUser) => {
-            console.log(currentUser);
             if (currentUser) {
-                setUser(currentUser);
+                // we want to have all the data at the top level
+                // get user's tasks from db
+                const database = getDatabase(firebase);
+                const dbRef = ref(database, `users/${currentUser.uid}`);
+
+                const newUser = {
+                    user: currentUser,
+                    userId: currentUser.uid,
+                };
+
+                onValue(dbRef, (res) => {
+                    const data = res.val();
+
+                    // the task in each categories are in an object
+                    // convert object to an array for easier usage
+                    // since tasks are nested in a category and categories are nested in the data
+                    // we have to use 2 for in loops
+                    for (let category in data) {
+                        const newTasksArray = [];
+
+                        for (let key in data[category]) {
+                            newTasksArray.push({
+                                key: key,
+                                task: data[category][key],
+                            });
+                        }
+
+                        // add to the newUser object
+                        newUser[category] = newTasksArray;
+                    }
+
+                    setUser(newUser);
+                });
             } else {
                 setUser({});
             }
@@ -32,10 +63,21 @@ function App() {
     // add task to firebase db
     const addTask = (category, task) => {
         const database = getDatabase(firebase);
-        // path will be user id / category / task
-        const dbRef = ref(database, `${user.uid}/${category}`);
+        // path will be users / user id / category / task
+        const dbRef = ref(database, `users/${user.userId}/${category}`);
 
         push(dbRef, task);
+    };
+
+    // delete task from firebase db
+    const deleteTask = (categoryName, taskKey) => {
+        const database = getDatabase(firebase);
+        const dbRef = ref(
+            database,
+            `users/${user.userId}/${categoryName}/${taskKey}`
+        );
+
+        remove(dbRef);
     };
 
     return (
@@ -44,7 +86,15 @@ function App() {
                 <div className="App">
                     <Header logoutUser={logoutUser} addTask={addTask} />
                     <Routes>
-                        <Route path="/" element={<Dashboard user={user} />} />
+                        <Route
+                            path="/"
+                            element={
+                                <Dashboard
+                                    user={user}
+                                    deleteTask={deleteTask}
+                                />
+                            }
+                        />
                         <Route path="/login" element={<Login />} />
                         <Route path="/register" element={<Register />} />
                     </Routes>

@@ -237,6 +237,7 @@ template {
 
 html {
   font-size: 125%;
+  background-color: #000;
 }
 
 img {
@@ -254,9 +255,77 @@ input {
   width: 100%;
 }
 
+.btn {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+* {
+  color: #fff;
+}
+
+.priority1 h2 {
+  color: rgb(255, 69, 57);
+}
+
+.priority2 h2 {
+  color: rgb(254, 215, 16);
+}
+
+.priority3 h2 {
+  color: rgb(26, 132, 254);
+}
+
+.notes h2 {
+  color: #fff;
+}
+
 .header {
-  width: 90vw;
+  width: max(1440px, 90vw);
+  padding: 20px;
   margin: 0 auto;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+.dashboard {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  gap: 15px;
+  width: max(1440px, 90vw);
+  padding: 20px;
+  margin: 0 auto;
+}
+
+.priority1 {
+  grid-area: 1/1/2/2;
+}
+
+.priority2 {
+  grid-area: 1/2/2/3;
+}
+
+.priority3 {
+  grid-area: 1/3/3/4;
+}
+
+.notes {
+  grid-area: 2/1/3/3;
+}
+
+.dashboardCard {
+  background-color: rgb(26, 25, 30);
+  border-radius: 15px;
+  padding: 15px;
+}
+
+.taskItem {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
