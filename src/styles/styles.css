@@ -334,7 +334,9 @@ button, select {
   bottom: 0;
   left: 0;
   right: 0;
-  background-color: rgba(0, 255, 255, 0.141);
+  background-color: rgba(49, 134, 187, 0.157);
+  -webkit-backdrop-filter: blur(5px);
+          backdrop-filter: blur(5px);
   display: grid;
   place-items: center;
 }
@@ -360,4 +362,8 @@ button, select {
   -webkit-box-pack: justify;
       -ms-flex-pack: justify;
           justify-content: space-between;
+}
+
+.isDragging {
+  font-weight: 700;
 }
