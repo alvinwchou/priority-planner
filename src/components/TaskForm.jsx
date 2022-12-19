@@ -49,9 +49,6 @@ const TaskForm = ({ logoutUser, addTask, catcher }) => {
                             ref={categoryRef}
                             required
                         >
-                            <option value="" disabled selected>
-                                Choose a Category
-                            </option>
                             <option value="priority1">Priority 1</option>
                             <option value="priority2">Priority 2</option>
                             <option value="priority3">Priority 3</option>

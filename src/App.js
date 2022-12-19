@@ -8,11 +8,13 @@ import Dashboard from "./pages/Dashboard";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import { getDatabase, ref, push, onValue, remove } from "firebase/database";
-import { useRef } from "react";
 
 function App() {
-    const [user, setUser] = useState({});
-    const [user2, setUser2] = useState({});
+    const [user, setUser] = useState({
+        user: null,
+        userId: null,
+        planner: {},
+    });
 
     const navigate = useNavigate();
 
@@ -25,10 +27,7 @@ function App() {
                 const database = getDatabase(firebase);
                 const dbRef = ref(database, `users/${currentUser.uid}`);
 
-                const newUser = {
-                    user: currentUser,
-                    userId: currentUser.uid,
-                };
+                const newPlannerObject = {};
 
                 onValue(dbRef, (res) => {
                     const data = res.val();
@@ -47,13 +46,23 @@ function App() {
                             });
                         }
 
-                        // add to the newUser object
-                        newUser[category] = newTasksArray;
+                        // add to the newPlannerObject
+                        newPlannerObject[category] = newTasksArray;
                     }
-                }).then(setUser(newUser));
+
+                    setUser({
+                        user: currentUser,
+                        userId: currentUser.uid,
+                        planner: newPlannerObject,
+                    });
+                });
             } else {
                 // if not user is logged in, navigate to login page
-                setUser({});
+                setUser({
+                    user: null,
+                    userId: null,
+                    planner: {},
+                });
                 navigate("/login");
             }
         });
@@ -61,7 +70,11 @@ function App() {
 
     // reset state after user has been logged out
     const logoutUser = () => {
-        setUser({});
+        setUser({
+            user: null,
+            userId: null,
+            planner: {},
+        });
     };
 
     // add task to firebase db
