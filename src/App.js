@@ -1,16 +1,20 @@
 import "./styles/styles.css";
-import { onAuthStateChanged, signOut } from "firebase/auth";
+import { onAuthStateChanged } from "firebase/auth";
 import React, { useEffect, useState } from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { Routes, Route, useNavigate } from "react-router-dom";
 import Header from "./components/Header";
 import firebase, { auth } from "./features/firebase/FirebaseConfig";
 import Dashboard from "./pages/Dashboard";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import { getDatabase, ref, push, onValue, remove } from "firebase/database";
+import { useRef } from "react";
 
 function App() {
     const [user, setUser] = useState({});
+    const [user2, setUser2] = useState({});
+
+    const navigate = useNavigate();
 
     useEffect(() => {
         // check if there is a user logged in, if so update state else clear state
@@ -46,14 +50,14 @@ function App() {
                         // add to the newUser object
                         newUser[category] = newTasksArray;
                     }
-
-                    setUser(newUser);
-                });
+                }).then(setUser(newUser));
             } else {
+                // if not user is logged in, navigate to login page
                 setUser({});
+                navigate("/login");
             }
         });
-    }, []);
+    }, [navigate]);
 
     // reset state after user has been logged out
     const logoutUser = () => {
@@ -81,26 +85,17 @@ function App() {
     };
 
     return (
-        <>
-            <Router>
-                <div className="App">
-                    <Header logoutUser={logoutUser} addTask={addTask} />
-                    <Routes>
-                        <Route
-                            path="/"
-                            element={
-                                <Dashboard
-                                    user={user}
-                                    deleteTask={deleteTask}
-                                />
-                            }
-                        />
-                        <Route path="/login" element={<Login />} />
-                        <Route path="/register" element={<Register />} />
-                    </Routes>
-                </div>
-            </Router>
-        </>
+        <div className="App">
+            <Header logoutUser={logoutUser} addTask={addTask} />
+            <Routes>
+                <Route
+                    path="/"
+                    element={<Dashboard user={user} deleteTask={deleteTask} />}
+                />
+                <Route path="/login" element={<Login />} />
+                <Route path="/register" element={<Register />} />
+            </Routes>
+        </div>
     );
 }
 

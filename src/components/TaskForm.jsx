@@ -22,7 +22,6 @@ const TaskForm = ({ logoutUser, addTask, catcher }) => {
 
     // event listener for when user clicks outside the form to close form
     const handleClick = (e) => {
-        console.log(e.target.className);
         catcher(e.target.className);
     };
 
