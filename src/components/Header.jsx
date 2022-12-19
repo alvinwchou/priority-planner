@@ -6,11 +6,13 @@ const Header = ({ logoutUser, addTask }) => {
 
     const date = new Date();
 
-    // toggle to show / hide menu
+    // array that holds the class names of acceptable elements to close
+    const close = ["toggle", "taskForm", "taskFormClose", "taskFormLogout"];
+
+    // close the menu
     const handleClick = (catcher) => {
-        // logoutUser();
-        // signOut(auth);
-        if (catcher == "toggle" || catcher == "taskForm") {
+        // check if the element is apart of the acceptable class names
+        if (close.includes(catcher)) {
             setShowMenu(!showMenu);
         }
     };
@@ -20,7 +22,13 @@ const Header = ({ logoutUser, addTask }) => {
             <p onClick={() => handleClick("toggle")}>+</p>
             <h1>Daily Planner</h1>
             <p>Date: {date.toDateString()}</p>
-            {showMenu && <TaskForm addTask={addTask} catcher={handleClick} />}
+            {showMenu && (
+                <TaskForm
+                    logoutUser={logoutUser}
+                    addTask={addTask}
+                    catcher={handleClick}
+                />
+            )}
         </div>
     );
 };

@@ -354,6 +354,13 @@ button, select {
   padding: 0.3rem;
   width: 100%;
 }
+.taskForm .formGroupFooter {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  gap: 1rem;
+  margin: 0 1rem;
+}
 
 .taskItem {
   display: -webkit-box;
