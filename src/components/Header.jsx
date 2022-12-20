@@ -1,7 +1,7 @@
 import { useState } from "react";
 import TaskForm from "./TaskForm";
 
-const Header = ({ logoutUser, addTask }) => {
+const Header = ({ userId, logoutUser, addTask }) => {
     const [showMenu, setShowMenu] = useState(false);
 
     const date = new Date();
@@ -11,8 +11,8 @@ const Header = ({ logoutUser, addTask }) => {
 
     // close the menu
     const handleClick = (catcher) => {
-        // check if the element is apart of the acceptable class names
-        if (close.includes(catcher)) {
+        // check if the element is apart of the acceptable class names and there is a user logged in
+        if (userId && close.includes(catcher)) {
             setShowMenu(!showMenu);
         }
     };

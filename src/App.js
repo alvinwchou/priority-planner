@@ -6,7 +6,6 @@ import Header from "./components/Header";
 import firebase, { auth } from "./features/firebase/FirebaseConfig";
 import Dashboard from "./pages/Dashboard";
 import LoginRegister from "./pages/LoginRegister";
-import Register from "./pages/Register";
 import { getDatabase, ref, push, onValue, remove } from "firebase/database";
 
 function App() {
@@ -100,7 +99,7 @@ function App() {
 
     return (
         <div className="App">
-            <Header logoutUser={logoutUser} addTask={addTask} />
+            <Header userId={user.userId} logoutUser={logoutUser} addTask={addTask} />
             <Routes>
                 <Route path="/" element={<LoginRegister />} />
                 <Route

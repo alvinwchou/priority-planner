@@ -371,8 +371,8 @@ a {
   padding: 0.3rem;
   width: 100%;
 }
-.login f button,
-.register f button {
+.login button,
+.register button {
   background-color: black;
   border-radius: 15px;
   padding: 0.3rem;
