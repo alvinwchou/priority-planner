@@ -247,7 +247,6 @@ img {
 
 a {
   text-decoration: none;
-  color: black;
   display: inline-block;
 }
 
@@ -255,7 +254,8 @@ input {
   width: 100%;
 }
 
-button, select {
+button,
+select {
   cursor: pointer;
 }
 
@@ -284,16 +284,36 @@ button, select {
   color: #fff;
 }
 
+input {
+  color: black;
+}
+
+a {
+  text-align: center;
+}
+
 .header {
-  width: max(1440px, 90vw);
+  width: min(1440px, 90vw);
   padding: 20px;
   margin: 0 auto;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
   -webkit-box-pack: justify;
       -ms-flex-pack: justify;
           justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+.header button {
+  border: none;
+  background-color: transparent;
+}
+.header .title {
+  text-align: center;
+}
+.header .todaysDate {
+  text-align: right;
 }
 
 .dashboard {
@@ -301,7 +321,7 @@ button, select {
   grid-template-columns: repeat(3, 1fr);
   grid-template-rows: repeat(2, 17rem);
   gap: 15px;
-  width: max(1440px, 90vw);
+  width: min(1440px, 90vw);
   padding: 20px;
   margin: 0 auto;
 }
@@ -326,6 +346,37 @@ button, select {
   background-color: rgb(26, 25, 30);
   border-radius: 15px;
   padding: 15px;
+}
+
+.login,
+.register {
+  width: min(1440px, 90vw);
+  margin: 0 auto;
+}
+.login form,
+.register form {
+  width: max(300px, 50%);
+  margin: 0 auto;
+  background-color: rgb(26, 25, 30);
+  border-radius: 15px;
+  padding: 15px;
+}
+.login .formGroup,
+.register .formGroup {
+  margin-top: 1.5rem;
+}
+.login .formGroup input,
+.register .formGroup input {
+  border-radius: 15px;
+  padding: 0.3rem;
+  width: 100%;
+}
+.login f button,
+.register f button {
+  background-color: black;
+  border-radius: 15px;
+  padding: 0.3rem;
+  width: 100%;
 }
 
 .taskForm {

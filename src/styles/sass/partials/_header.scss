@@ -1,7 +1,22 @@
 .header {
-    width: max(1440px, 90vw);
+    width: min(1440px, 90vw);
     padding: 20px;
     margin: 0 auto;
-    display: flex;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
     justify-content: space-between;
+    align-items: center;
+
+    button {
+        border: none;
+        background-color: transparent;
+    }
+
+    .title {
+        text-align: center;
+    }
+
+    .todaysDate {
+        text-align: right;
+    }
 }

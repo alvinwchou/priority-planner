@@ -19,9 +19,13 @@ const Header = ({ logoutUser, addTask }) => {
 
     return (
         <div className="header">
-            <p onClick={() => handleClick("toggle")}>+</p>
-            <h1>Daily Planner</h1>
-            <p>Date: {date.toDateString()}</p>
+            <div>
+                <button onClick={() => handleClick("toggle")}>
+                    <h1>+</h1>
+                </button>
+            </div>
+            <h1 className="title">Daily Planner</h1>
+            <h2 className="todaysDate">Date: {date.toDateString()}</h2>
             {showMenu && (
                 <TaskForm
                     logoutUser={logoutUser}

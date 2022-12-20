@@ -35,7 +35,7 @@ const TaskForm = ({ logoutUser, addTask, catcher }) => {
             .then(() => {
                 // after successfully logging user out, nav to login page
                 logoutUser();
-                navigate("/login");
+                navigate("/");
             })
             .catch((err) => alert(err.message));
     };
@@ -109,12 +109,12 @@ const TaskForm = ({ logoutUser, addTask, catcher }) => {
                     </div>
                 </form>
                 <div className="formGroup formGroupFooter">
-                    {/* <button
+                    <button
                         className="taskFormLogout"
                         onClick={handleClickLogout}
                     >
                         Logout
-                    </button> */}
+                    </button>
                     <button className="taskFormClose">Close</button>
                 </div>
             </div>

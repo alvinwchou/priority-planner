@@ -5,7 +5,7 @@ import { Routes, Route, useNavigate } from "react-router-dom";
 import Header from "./components/Header";
 import firebase, { auth } from "./features/firebase/FirebaseConfig";
 import Dashboard from "./pages/Dashboard";
-import Login from "./pages/Login";
+import LoginRegister from "./pages/LoginRegister";
 import Register from "./pages/Register";
 import { getDatabase, ref, push, onValue, remove } from "firebase/database";
 
@@ -63,7 +63,7 @@ function App() {
                     userId: null,
                     planner: {},
                 });
-                navigate("/login");
+                navigate("/");
             }
         });
     }, [navigate]);
@@ -88,7 +88,7 @@ function App() {
 
     // delete task from firebase db
     const deleteTask = (categoryName, taskKey) => {
-        console.log('delete');
+        console.log("delete");
         const database = getDatabase(firebase);
         const dbRef = ref(
             database,
@@ -102,12 +102,11 @@ function App() {
         <div className="App">
             <Header logoutUser={logoutUser} addTask={addTask} />
             <Routes>
+                <Route path="/" element={<LoginRegister />} />
                 <Route
-                    path="/"
+                    path="/dashboard"
                     element={<Dashboard user={user} deleteTask={deleteTask} />}
                 />
-                <Route path="/login" element={<Login />} />
-                <Route path="/register" element={<Register />} />
             </Routes>
         </div>
     );
