@@ -88,6 +88,7 @@ function App() {
 
     // delete task from firebase db
     const deleteTask = (categoryName, taskKey) => {
+        console.log('delete');
         const database = getDatabase(firebase);
         const dbRef = ref(
             database,
