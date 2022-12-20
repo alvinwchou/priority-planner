@@ -4,7 +4,7 @@ import { RiCloseFill } from "react-icons/ri";
 import { RxDragHandleHorizontal } from "react-icons/rx";
 
 const TaskItems = ({ tasks, category, deleteTask }) => {
-    const [isDragging, setIsDragging] = useState(null)
+    const [isDragging, setIsDragging] = useState(null);
 
     const taskItemsRef = useRef();
 
@@ -14,12 +14,12 @@ const TaskItems = ({ tasks, category, deleteTask }) => {
 
     const handleDragStart = (task) => {
         // e.target.classList.add("isDragging");
-        setIsDragging(task)
+        setIsDragging(task);
     };
 
     const handleDragEnd = (e) => {
         // e.target.classList.remove("isDragging");
-        setIsDragging(null)
+        setIsDragging(null);
     };
 
     const handleDragOver = (e) => {
@@ -75,7 +75,9 @@ const TaskItems = ({ tasks, category, deleteTask }) => {
             {tasks?.map((task) => {
                 return (
                     <div
-                        className={`taskItem ${isDragging === task.key && "isDragging"}`}
+                        className={`taskItem ${
+                            isDragging === task.key && "isDragging"
+                        }`}
                         key={task.key}
                         onDragStart={() => handleDragStart(task.key)}
                         onDragEnd={handleDragEnd}

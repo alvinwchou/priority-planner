@@ -14,7 +14,6 @@ const TaskForm = ({ logoutUser, addTask, catcher }) => {
         const category = categoryRef.current.value;
         const task = taskRef.current.value;
 
-        
         if (isThereRoomForTask(category)) {
             // add task to db
             addTask(category, task);
@@ -22,7 +21,7 @@ const TaskForm = ({ logoutUser, addTask, catcher }) => {
             // reset the form
             taskRef.current.value = "";
         } else {
-            alert(`Too many task, please delete before adding to ${category}`)
+            alert(`Too many task, please delete before adding to ${category}`);
         }
     };
 
@@ -41,20 +40,23 @@ const TaskForm = ({ logoutUser, addTask, catcher }) => {
             .catch((err) => alert(err.message));
     };
 
-
     const isThereRoomForTask = (category) => {
-        // selecting the category card 
-        const dashboardCardElement = document.querySelector(`.${category}`)
+        // selecting the category card
+        const dashboardCardElement = document.querySelector(`.${category}`);
 
         // selecting the taskItems element in side the category element
-        const taskItemsElement = document.querySelector(`.${category} .taskItems`)
+        const taskItemsElement = document.querySelector(
+            `.${category} .taskItems`
+        );
 
         // selecting the taskItem element in side the taskItems element
-        const taskItemElement = document.querySelector(`.${category} .taskItem`)
+        const taskItemElement = document.querySelector(
+            `.${category} .taskItem`
+        );
 
         // getting the bottom position of category card
         const dashboardCardElementBottom =
-            dashboardCardElement.getBoundingClientRect().bottom
+            dashboardCardElement.getBoundingClientRect().bottom;
 
         // getting the bottom position of the last task in the category card
         const taskItemsElementBottom =
@@ -63,19 +65,13 @@ const TaskForm = ({ logoutUser, addTask, catcher }) => {
         const taskItemElementHeight =
             taskItemElement.getBoundingClientRect().height;
 
-            console.log(taskItemElement.getBoundingClientRect());
-
-        console.log({
-            dashboardCardElementBottom,
-            taskItemsElementBottom,
-            taskItemElementHeight,
-        });
-
         // if the difference between the bottom of the category card and the bottom of the taskitems is less then the height of the individual item. not enough space to add more task
         // return true if there is space
-        return ((dashboardCardElementBottom - taskItemsElementBottom) > taskItemElementHeight)
-    }
-
+        return (
+            dashboardCardElementBottom - taskItemsElementBottom >
+            taskItemElementHeight
+        );
+    };
 
     return (
         <div className="taskForm" onClick={(e) => handleClick(e)}>
@@ -113,12 +109,12 @@ const TaskForm = ({ logoutUser, addTask, catcher }) => {
                     </div>
                 </form>
                 <div className="formGroup formGroupFooter">
-                    <button
+                    {/* <button
                         className="taskFormLogout"
                         onClick={handleClickLogout}
                     >
                         Logout
-                    </button>
+                    </button> */}
                     <button className="taskFormClose">Close</button>
                 </div>
             </div>
