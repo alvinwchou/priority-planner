@@ -44,13 +44,8 @@ const TaskForm = ({ logoutUser, addTask, catcher }) => {
         // selecting the category card
         const dashboardCardElement = document.querySelector(`.${category}`);
 
-        // selecting the taskItems element in side the category element
-        const taskItemsElement = document.querySelector(
-            `.${category} .taskItems`
-        );
-
         // selecting the taskItem element in side the taskItems element
-        const taskItemElement = document.querySelector(
+        const taskItemElement = document.querySelectorAll(
             `.${category} .taskItem`
         );
 
@@ -58,18 +53,20 @@ const TaskForm = ({ logoutUser, addTask, catcher }) => {
         const dashboardCardElementBottom =
             dashboardCardElement.getBoundingClientRect().bottom;
 
-        // getting the bottom position of the last task in the category card
-        const taskItemsElementBottom =
-            taskItemsElement.getBoundingClientRect().bottom;
-
-        // 15 is default hight if there is no task yet
+        // getting the hight of the task, 15 is default hight if there is no task yet
         const taskItemElementHeight =
-            taskItemElement?.getBoundingClientRect().height || 15;
+            taskItemElement?.[0]?.getBoundingClientRect().height || 15;
 
-        // if the difference between the bottom of the category card and the bottom of the taskitems is less then the height of the individual item. not enough space to add more task
+        // getting the bottom position of the last task in the category card
+        const taskItemElementBottom =
+            taskItemElement?.[
+                taskItemElement.length - 1
+            ]?.getBoundingClientRect().bottom;
+
+        // if the difference between the bottom of the category card and the bottom of the last task is less then the height of the individual item. not enough space to add more task
         // return true if there is space
         return (
-            dashboardCardElementBottom - taskItemsElementBottom >
+            dashboardCardElementBottom - taskItemElementBottom >
             taskItemElementHeight
         );
     };
