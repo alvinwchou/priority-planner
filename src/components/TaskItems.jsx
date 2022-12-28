@@ -17,9 +17,17 @@ const TaskItems = ({ tasks, category, deleteTask }) => {
         setIsDragging(task);
     };
 
-    const handleDragEnd = (e) => {
+    const handleDragEnd = () => {
         // e.target.classList.remove("isDragging");
         setIsDragging(null);
+
+        // // grabbing the list of items where the task was grabbed from
+        // const firstChildren = [... taskItemsRef.current.children]
+        // const firstArray = []
+        // firstChildren.forEach(child => {
+        //     firstArray.push(child.innerText)
+        // })
+        // console.log(firstArray);
     };
 
     const handleDragOver = (e) => {
@@ -37,6 +45,13 @@ const TaskItems = ({ tasks, category, deleteTask }) => {
         } else {
             taskItemsRef.current.insertBefore(currentTask, bottomTask);
         }
+
+        // const secondChildren = [... taskItemsRef.current.children]
+        // const secondArray = [];
+        // secondChildren.forEach((child) => {
+        //     secondArray.push(child.innerText);
+        // });
+        // console.log(secondArray);
     };
 
     const insertAboveTask = (category, mouseY) => {

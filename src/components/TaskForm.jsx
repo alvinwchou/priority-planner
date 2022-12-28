@@ -62,8 +62,9 @@ const TaskForm = ({ logoutUser, addTask, catcher }) => {
         const taskItemsElementBottom =
             taskItemsElement.getBoundingClientRect().bottom;
 
+        // 15 is default hight if there is no task yet
         const taskItemElementHeight =
-            taskItemElement.getBoundingClientRect().height;
+            taskItemElement?.getBoundingClientRect().height || 15;
 
         // if the difference between the bottom of the category card and the bottom of the taskitems is less then the height of the individual item. not enough space to add more task
         // return true if there is space
