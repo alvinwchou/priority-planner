@@ -77,10 +77,10 @@ function App() {
     };
 
     // add task to firebase db
-    const addTask = (category, task) => {
+    const addTask = (categoryName, task) => {
         const database = getDatabase(firebase);
-        // path will be users / user id / category / task
-        const dbRef = ref(database, `users/${user.userId}/${category}`);
+        // path will be users / user id / categoryName / task
+        const dbRef = ref(database, `users/${user.userId}/${categoryName}`);
 
         push(dbRef, task);
     };
@@ -95,6 +95,22 @@ function App() {
         );
 
         remove(dbRef);
+
+
+        // the code below was provided by chatgtp, I was having problems with the DOM not rerendering when the last item task of a list was delete.
+
+        // In this revised example, the deleteTask function removes the task from the Firebase database using the remove() method, and then creates a new copy of the planner object with the task removed using the spread operator and the filter() method. The new object is then passed to the setUser() function to update the state. This causes the component to re-render with the updated state, and the DOM reflects the change to the planner object.
+
+        // Create a new copy of the planner object with the task removed
+        const newPlanner = {
+            ...user.planner,
+            [categoryName]: [...user.planner[categoryName]].filter(
+                (task) => task.key !== taskKey
+            ),
+        };
+
+        // Update the state with the new planner object
+        setUser({ ...user, planner: newPlanner });
     };
 
     return (
