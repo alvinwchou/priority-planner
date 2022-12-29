@@ -57,11 +57,17 @@ const TaskForm = ({ logoutUser, addTask, catcher }) => {
         const taskItemElementHeight =
             taskItemElement?.[0]?.getBoundingClientRect().height || 15;
 
-        // getting the bottom position of the last task in the category card
+        // getting the bottom position of the last task in the category card, 100 is default bottom position if there is no task
         const taskItemElementBottom =
             taskItemElement?.[
                 taskItemElement.length - 1
-            ]?.getBoundingClientRect().bottom;
+            ]?.getBoundingClientRect().bottom || 100;
+
+        console.log({
+            dashboardCardElementBottom,
+            taskItemElementBottom,
+            taskItemElementHeight,
+        });
 
         // if the difference between the bottom of the category card and the bottom of the last task is less then the height of the individual item. not enough space to add more task
         // return true if there is space
