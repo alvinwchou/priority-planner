@@ -1,12 +1,9 @@
 import { useState } from "react";
-import { useRef } from "react";
 import { RiCloseFill } from "react-icons/ri";
 import { RxDragHandleHorizontal } from "react-icons/rx";
 
 const TaskItems = ({ tasks, category, deleteTask }) => {
     const [isDragging, setIsDragging] = useState(null);
-
-    const taskItemsRef = useRef();
 
     const handleClickRemove = (taskKey) => {
         deleteTask(category, taskKey);
@@ -33,17 +30,20 @@ const TaskItems = ({ tasks, category, deleteTask }) => {
     const handleDragOver = (e) => {
         e.preventDefault();
 
-        // find out what task is below the current task being selected / hovered based on the position of mouse
-        const bottomTask = insertAboveTask(taskItemsRef.current, e.clientY);
+        // find the category that the task is being hovered over
+        const taskItemsRef = e.target.closest(".taskItems");
 
-        // get the current div which being dragged
+        // find out what task is below the current task being selected / hovered based on the position of mouse
+        const bottomTask = insertAboveTask(taskItemsRef, e.clientY);
+
+        // get the current task which being dragged
         const currentTask = document.querySelector(".isDragging");
 
         if (!bottomTask) {
             // if there is no current bottomTask then we append it to the bottom of the category list
-            taskItemsRef.current.appendChild(currentTask);
+            taskItemsRef.appendChild(currentTask);
         } else {
-            taskItemsRef.current.insertBefore(currentTask, bottomTask);
+            taskItemsRef.insertBefore(currentTask, bottomTask);
         }
 
         // const secondChildren = [... taskItemsRef.current.children]
@@ -82,11 +82,7 @@ const TaskItems = ({ tasks, category, deleteTask }) => {
     };
 
     return (
-        <div
-            className="taskItems"
-            onDragOver={handleDragOver}
-            ref={taskItemsRef}
-        >
+        <div className="taskItems" onDragOver={handleDragOver}>
             {tasks?.map((task) => {
                 return (
                     <div
