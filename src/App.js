@@ -6,7 +6,7 @@ import Header from "./components/Header";
 import firebase, { auth } from "./features/firebase/FirebaseConfig";
 import Dashboard from "./pages/Dashboard";
 import LoginRegister from "./pages/LoginRegister";
-import { getDatabase, ref, push, onValue, remove } from "firebase/database";
+import { getDatabase, ref, push, onValue, remove, child, set, update } from "firebase/database";
 
 function App() {
     const [user, setUser] = useState({
@@ -30,6 +30,8 @@ function App() {
 
                 onValue(dbRef, (res) => {
                     const data = res.val();
+
+                    console.log(data);
 
                     // the task in each categories are in an object
                     // convert object to an array for easier usage
@@ -82,12 +84,27 @@ function App() {
         // path will be users / user id / categoryName / task
         const dbRef = ref(database, `users/${user.userId}/${categoryName}`);
 
-        push(dbRef, task);
+        const tempArray = [];
+
+        // get current task in the list
+        const listedItems = user.planner[categoryName];
+
+        // push all current items in the the temp array
+        listedItems?.forEach((item) => {
+            console.log(item);
+            tempArray.push(item.task);
+        });
+
+        // push the new task to the temp array
+        tempArray.push(task);
+
+        // update the db with new list
+        set(dbRef, tempArray);
     };
 
     // delete task from firebase db
     const deleteTask = (categoryName, taskKey) => {
-        console.log("delete");
+        console.log("delete", categoryName);
         const database = getDatabase(firebase);
         const dbRef = ref(
             database,
@@ -113,6 +130,71 @@ function App() {
         setUser({ ...user, planner: newPlanner });
     };
 
+    const compareLists = (starting, ending) => {
+        const database = getDatabase(firebase);
+        // console.log(starting.target.parentElement.parentElement.id);
+        // const startingCategory = starting.target.parentElement.parentElement.id;
+        // const startingCategoryList = starting.target.parentElement.children
+        // console.log(startingCategoryList);
+
+        const currentLists = document.querySelectorAll(".taskItems")
+        console.log(currentLists);
+
+        const planner = {}
+
+        // for each list we will get the name of the category it is under
+        currentLists.forEach((list) => {
+            console.log("category", list.id);
+            // get the category name
+            const categoryName = list.id;
+
+            // getting node list of task
+            const currentList = list.children;
+            console.log(currentList);
+
+            const tempArray = [];
+
+            const dbRef = ref(database, `users/${user.userId}/${categoryName}`);
+
+            for (let child of currentList) {
+                // console.log(child.id, child.innerText);
+                const key = child.id
+                const task = child.innerText
+                // currentListArray.push({[key]: task});
+                console.log({categoryName, key, task});
+                // obj[key] = task
+                tempArray.push(task)
+                   // update(dbRef, [key] = task);
+            }
+            set(dbRef, tempArray)
+            // planner[categoryName] = obj
+            // console.log(currentListArray);
+
+            
+            
+            
+            // console.log(user.planner[categoryName]);
+
+            // planner[categoryName] = currentListArray
+        });
+
+        console.log("PLANNER", planner);
+
+
+
+        // update list
+        // path will be users / user id / categoryName / task
+        const dbRef = ref(database, `users/${user.userId}/`);
+
+        // set(dbRef, planner);
+
+
+
+
+
+
+    }
+
     return (
         <div className="App">
             <Header userId={user.userId} logoutUser={logoutUser} addTask={addTask} />
@@ -120,7 +202,7 @@ function App() {
                 <Route path="/" element={<LoginRegister />} />
                 <Route
                     path="/dashboard"
-                    element={<Dashboard user={user} deleteTask={deleteTask} />}
+                    element={<Dashboard user={user} deleteTask={deleteTask} compareLists={compareLists}/>}
                 />
             </Routes>
         </div>

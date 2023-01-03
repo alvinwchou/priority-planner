@@ -1,7 +1,7 @@
 // This will be our dashboard where uses can plan their task after login
 import TaskItems from "../components/TaskItems";
 
-const Dashboard = ({ user, deleteTask }) => {
+const Dashboard = ({ user, deleteTask, compareLists }) => {
     return (
         <div className="dashboard">
             <div className="dashboardCard priority1">
@@ -10,6 +10,7 @@ const Dashboard = ({ user, deleteTask }) => {
                     tasks={user.planner.priority1}
                     category={"priority1"}
                     deleteTask={deleteTask}
+                    compareLists={compareLists}
                 />
             </div>
             <div className="dashboardCard priority2">
@@ -18,6 +19,7 @@ const Dashboard = ({ user, deleteTask }) => {
                     tasks={user.planner.priority2}
                     category={"priority2"}
                     deleteTask={deleteTask}
+                    compareLists={compareLists}
                 />
             </div>
             <div className="dashboardCard priority3">
@@ -26,6 +28,7 @@ const Dashboard = ({ user, deleteTask }) => {
                     tasks={user.planner.priority3}
                     category={"priority3"}
                     deleteTask={deleteTask}
+                    compareLists={compareLists}
                 />
             </div>
             <div className="dashboardCard notes">
@@ -34,6 +37,7 @@ const Dashboard = ({ user, deleteTask }) => {
                     tasks={user.planner.notes}
                     category={"notes"}
                     deleteTask={deleteTask}
+                    compareLists={compareLists}
                 />
             </div>
         </div>

@@ -2,28 +2,40 @@ import { useState } from "react";
 import { RiCloseFill } from "react-icons/ri";
 import { RxDragHandleHorizontal } from "react-icons/rx";
 
-const TaskItems = ({ tasks, category, deleteTask }) => {
+const TaskItems = ({ tasks, category, deleteTask, compareLists }) => {
     const [isDragging, setIsDragging] = useState(null);
+
+    const [startingList, setStartingList] = useState(null)
 
     const handleClickRemove = (taskKey) => {
         deleteTask(category, taskKey);
     };
 
-    const handleDragStart = (task) => {
+    const handleDragStart = (e, task) => {
         // e.target.classList.add("isDragging");
         setIsDragging(task);
+        // console.log("start", e);
+        // console.log("start", e.target.parentElement.children);
+        // console.log("start", e.target.parentElement.parentElement.id);
+
+        setStartingList(e)
     };
 
-    const handleDragEnd = () => {
+    const handleDragEnd = (e) => {
         // e.target.classList.remove("isDragging");
         setIsDragging(null);
 
+        // const endingList = e
+
+        compareLists()
+
+        // // console.log("end", e.target.parentElement.children);
         // // grabbing the list of items where the task was grabbed from
-        // const firstChildren = [... taskItemsRef.current.children]
+        // // const firstChildren = [... taskItemsRef.current.children]
         // const firstArray = []
-        // firstChildren.forEach(child => {
-        //     firstArray.push(child.innerText)
-        // })
+        // // firstChildren.forEach(child => {
+        // //     firstArray.push(child.innerText)
+        // // })
         // console.log(firstArray);
     };
 
@@ -82,7 +94,7 @@ const TaskItems = ({ tasks, category, deleteTask }) => {
     };
 
     return (
-        <div className="taskItems" onDragOver={handleDragOver}>
+        <div className="taskItems" id={category} onDragOver={handleDragOver}>
             {tasks?.map((task) => {
                 return (
                     <div
@@ -90,8 +102,9 @@ const TaskItems = ({ tasks, category, deleteTask }) => {
                             isDragging === task.key && "isDragging"
                         }`}
                         key={task.key}
-                        onDragStart={() => handleDragStart(task.key)}
-                        onDragEnd={handleDragEnd}
+                        id={task.key}
+                        onDragStart={(e) => handleDragStart(e, task.key)}
+                        onDragEnd={(e) => handleDragEnd(e)}
                         draggable
                     >
                         <p>
