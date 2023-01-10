@@ -1,42 +1,69 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { RiCloseFill } from "react-icons/ri";
 import { RxDragHandleHorizontal } from "react-icons/rx";
 
-const TaskItems = ({ tasks, category, deleteTask, compareLists }) => {
+const TaskItems = ({
+    tasks,
+    category,
+    addTask,
+    deleteTask,
+    compareLists,
+    updateLists,
+}) => {
     const [isDragging, setIsDragging] = useState(null);
+    const taskItemsRef = useRef();
 
-    const [startingList, setStartingList] = useState(null)
+    // const [startingList, setStartingList] = useState(null)
+    const [startingCategoryName, setStartingCategoryName] = useState(null);
+    const [startingCategoryElement, setStartingCategoryElement] =
+        useState(null);
+    const [selectedTask, setSelectedTask] = useState(null);
+    const [selectedTaskId, setSelectedTaskId] = useState(null);
+    const [currentTaskRef, setCurrentTaskRef] = useState(null);
 
     const handleClickRemove = (taskKey) => {
         deleteTask(category, taskKey);
     };
 
-    const handleDragStart = (e, task) => {
-        // e.target.classList.add("isDragging");
-        setIsDragging(task);
-        // console.log("start", e);
-        // console.log("start", e.target.parentElement.children);
-        // console.log("start", e.target.parentElement.parentElement.id);
+    const handleDragStart = (e, taskKey) => {
+        // setting state to the task key
+        setIsDragging(taskKey);
 
-        setStartingList(e)
+        // keep track of the task selected
+        setSelectedTask(e.target.innerText);
+        // keep track of the selected task id
+        setSelectedTaskId(e.target.id);
+        // keep track of which list we started with
+        setStartingCategoryName(e.target.parentElement.id);
+        setStartingCategoryElement(e.target.parentElement);
     };
 
     const handleDragEnd = (e) => {
-        // e.target.classList.remove("isDragging");
         setIsDragging(null);
 
-        // const endingList = e
+        // the task we are dragging, list we dragged from and list we dragged to
+        // updateLists(selectedTask, startingCategoryName, e.target.parentElement.id);
+        // console.log(
+        //     selectedTask,
+        //     startingCategoryName,
+        //     e.target.parentElement.id,
+        //     startingCategoryElement
+        // );
 
-        compareLists()
+        // console.log(taskItemsRef);
 
-        // // console.log("end", e.target.parentElement.children);
-        // // grabbing the list of items where the task was grabbed from
-        // // const firstChildren = [... taskItemsRef.current.children]
-        // const firstArray = []
-        // // firstChildren.forEach(child => {
-        // //     firstArray.push(child.innerText)
-        // // })
-        // console.log(firstArray);
+        const endingCategoryName = e.target.parentElement.id;
+
+        // move task back to original list before we can delete it
+        // if not we would get an error
+        // Uncaught DOMException: Failed to execute 'removeChild' on 'Node': The node to be removed is not a child of this node.
+        startingCategoryElement.appendChild(currentTaskRef);
+
+        // delete task from original list
+        deleteTask(startingCategoryName, selectedTaskId);
+
+        // add task to hovered list
+        addTask(endingCategoryName, selectedTask);
     };
 
     const handleDragOver = (e) => {
@@ -51,19 +78,18 @@ const TaskItems = ({ tasks, category, deleteTask, compareLists }) => {
         // get the current task which being dragged
         const currentTask = document.querySelector(".isDragging");
 
-        if (!bottomTask) {
-            // if there is no current bottomTask then we append it to the bottom of the category list
-            taskItemsRef.appendChild(currentTask);
-        } else {
-            taskItemsRef.insertBefore(currentTask, bottomTask);
-        }
+        // set state to currentTask for reference
+        setCurrentTaskRef(currentTask);
 
-        // const secondChildren = [... taskItemsRef.current.children]
-        // const secondArray = [];
-        // secondChildren.forEach((child) => {
-        //     secondArray.push(child.innerText);
-        // });
-        // console.log(secondArray);
+        // append current task to bottom of hovered list
+        taskItemsRef.appendChild(currentTask);
+
+        // if (!bottomTask) {
+        //     // if there is no current bottomTask then we append it to the bottom of the category list
+        //     taskItemsRef.appendChild(currentTask);
+        // } else {
+        //     taskItemsRef.insertBefore(currentTask, bottomTask);
+        // }
     };
 
     const insertAboveTask = (category, mouseY) => {
@@ -94,7 +120,12 @@ const TaskItems = ({ tasks, category, deleteTask, compareLists }) => {
     };
 
     return (
-        <div className="taskItems" id={category} onDragOver={handleDragOver}>
+        <div
+            className="taskItems"
+            id={category}
+            onDragOver={handleDragOver}
+            ref={taskItemsRef}
+        >
             {tasks?.map((task) => {
                 return (
                     <div

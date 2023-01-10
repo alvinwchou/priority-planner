@@ -6,7 +6,16 @@ import Header from "./components/Header";
 import firebase, { auth } from "./features/firebase/FirebaseConfig";
 import Dashboard from "./pages/Dashboard";
 import LoginRegister from "./pages/LoginRegister";
-import { getDatabase, ref, push, onValue, remove, child, set, update } from "firebase/database";
+import {
+    getDatabase,
+    ref,
+    push,
+    onValue,
+    remove,
+    child,
+    set,
+    update,
+} from "firebase/database";
 
 function App() {
     const [user, setUser] = useState({
@@ -31,7 +40,7 @@ function App() {
                 onValue(dbRef, (res) => {
                     const data = res.val();
 
-                    console.log(data);
+                    // console.log(data);
 
                     // the task in each categories are in an object
                     // convert object to an array for easier usage
@@ -91,20 +100,17 @@ function App() {
 
         // push all current items in the the temp array
         listedItems?.forEach((item) => {
-            console.log(item);
             tempArray.push(item.task);
         });
 
         // push the new task to the temp array
         tempArray.push(task);
-
         // update the db with new list
         set(dbRef, tempArray);
     };
 
     // delete task from firebase db
     const deleteTask = (categoryName, taskKey) => {
-        console.log("delete", categoryName);
         const database = getDatabase(firebase);
         const dbRef = ref(
             database,
@@ -112,7 +118,6 @@ function App() {
         );
 
         remove(dbRef);
-
 
         // the code below was provided by chatgtp, I was having problems with the DOM not rerendering when the last item task of a list was delete.
 
@@ -130,21 +135,15 @@ function App() {
         setUser({ ...user, planner: newPlanner });
     };
 
-    const compareLists = (starting, ending) => {
+    const compareLists = () => {
         const database = getDatabase(firebase);
-        // console.log(starting.target.parentElement.parentElement.id);
-        // const startingCategory = starting.target.parentElement.parentElement.id;
-        // const startingCategoryList = starting.target.parentElement.children
-        // console.log(startingCategoryList);
 
-        const currentLists = document.querySelectorAll(".taskItems")
-        console.log(currentLists);
+        const testing = {};
 
-        const planner = {}
+        const currentLists = document.querySelectorAll(".taskItems");
 
         // for each list we will get the name of the category it is under
         currentLists.forEach((list) => {
-            console.log("category", list.id);
             // get the category name
             const categoryName = list.id;
 
@@ -158,51 +157,107 @@ function App() {
 
             for (let child of currentList) {
                 // console.log(child.id, child.innerText);
-                const key = child.id
-                const task = child.innerText
+                const key = child.id;
+                const task = child.innerText;
                 // currentListArray.push({[key]: task});
-                console.log({categoryName, key, task});
+                console.log({ categoryName, task });
                 // obj[key] = task
-                tempArray.push(task)
-                   // update(dbRef, [key] = task);
+                tempArray.push(task);
+                // update(dbRef, [key] = task);
             }
-            set(dbRef, tempArray)
+            testing[categoryName] = tempArray;
+            // set(dbRef, tempArray)
             // planner[categoryName] = obj
             // console.log(currentListArray);
 
-            
-            
-            
             // console.log(user.planner[categoryName]);
 
             // planner[categoryName] = currentListArray
         });
 
-        console.log("PLANNER", planner);
-
-
+        console.log("PLANNER", testing);
 
         // update list
         // path will be users / user id / categoryName / task
         const dbRef = ref(database, `users/${user.userId}/`);
+        set(dbRef, testing);
+        // setUser({...user, planner: testing})
+    };
 
-        // set(dbRef, planner);
+    const updateLists = (selectedTask, startingCategoryName, endingCategoryName) => {
+        console.log(selectedTask, startingCategoryName, endingCategoryName);
+        // update
+        // const startingList = document.querySelector(`#${startingCategoryName}`);
+        // console.log(startingList.children);
+        // const startingArray = [];
+        // // for (let child of startingList.children) {
+        // //     console.log(child);
+        // //     startingArray.push(child.innerText)
+        // // }
+        // for (let i = 0; i < startingList.children.length; i++) {
+        //     const task = startingList.children[i].innerText;
+
+        //     startingArray.push({ key: `${i}`, task });
+        // }
+        // console.log(startingArray);
+
+        // setUser((prevUser) => {
+        //     return {
+        //         ...prevUser,
+        //         planner: {
+        //             ...prevUser.planner,
+        //             notes: startingArray,
+        //         },
+        //     };
+        // });
 
 
+        // if startingCategoryName is the same as endingCategoryName do nothing
+        if (startingCategoryName == endingCategoryName) return;
+        // remove the task from the starting list, add the task to the ending list
+        const startingArray = [...user.planner[startingCategoryName]];
+        console.log(startingArray);
+        const newStartingArray = startingArray.filter(
+            (item) => item.task != selectedTask
+        );
+        console.log(newStartingArray);
 
+        // setUser((prevUser) => {
+        //     return {
+        //         ...prevUser,
+        //         planner: {
+        //             ...prevUser.planner,
+        //             [startingCategoryName]: newStartingArray,
+        //         },
+        //     };
+        // });
 
+        const database = getDatabase(firebase);
+        const dbRef = ref(database, `users/${user.userId}/${startingCategoryName}`);
 
-
-    }
+        // set(dbRef, newStartingArray)
+    };
 
     return (
         <div className="App">
-            <Header userId={user.userId} logoutUser={logoutUser} addTask={addTask} />
+            <Header
+                userId={user.userId}
+                logoutUser={logoutUser}
+                addTask={addTask}
+            />
             <Routes>
                 <Route path="/" element={<LoginRegister />} />
                 <Route
                     path="/dashboard"
-                    element={<Dashboard user={user} deleteTask={deleteTask} compareLists={compareLists}/>}
+                    element={
+                        <Dashboard
+                            user={user}
+                            addTask={addTask}
+                            deleteTask={deleteTask}
+                            compareLists={compareLists}
+                            updateLists={updateLists}
+                        />
+                    }
                 />
             </Routes>
         </div>
