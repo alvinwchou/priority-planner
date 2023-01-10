@@ -41,21 +41,10 @@ const TaskItems = ({
     const handleDragEnd = (e) => {
         setIsDragging(null);
 
-        // the task we are dragging, list we dragged from and list we dragged to
-        // updateLists(selectedTask, startingCategoryName, e.target.parentElement.id);
-        // console.log(
-        //     selectedTask,
-        //     startingCategoryName,
-        //     e.target.parentElement.id,
-        //     startingCategoryElement
-        // );
-
-        // console.log(taskItemsRef);
-
         const endingCategoryName = e.target.parentElement.id;
 
         // move task back to original list before we can delete it
-        // if not we would get an error
+        // if not we would get an error:
         // Uncaught DOMException: Failed to execute 'removeChild' on 'Node': The node to be removed is not a child of this node.
         startingCategoryElement.appendChild(currentTaskRef);
 
@@ -64,6 +53,19 @@ const TaskItems = ({
 
         // add task to hovered list
         addTask(endingCategoryName, selectedTask);
+
+        // side note for when I come back and try to implement the free drag and drop and not just the appendChild
+
+        // case 1 moved within same list (start above line 55)
+        // get the new order push to a temp array
+        // create a function set to db
+
+        // case 2 move to a new list (start from line 55 const endingCategoryName)
+        // get the new order from the hovered list
+        // push to temp array
+        // append currentTaskRef back to original list
+        // deleteTask
+        // create a function to set to db
     };
 
     const handleDragOver = (e) => {
@@ -84,6 +86,7 @@ const TaskItems = ({
         // append current task to bottom of hovered list
         taskItemsRef.appendChild(currentTask);
 
+        // "free" drag and drop
         // if (!bottomTask) {
         //     // if there is no current bottomTask then we append it to the bottom of the category list
         //     taskItemsRef.appendChild(currentTask);
