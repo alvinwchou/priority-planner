@@ -436,5 +436,6 @@ a {
 }
 
 .isDragging {
+  scale: 1.05;
   font-weight: 700;
 }

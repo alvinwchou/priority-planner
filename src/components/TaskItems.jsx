@@ -2,14 +2,7 @@ import { useState, useRef } from "react";
 import { RiCloseFill } from "react-icons/ri";
 import { RxDragHandleHorizontal } from "react-icons/rx";
 
-const TaskItems = ({
-    tasks,
-    category,
-    addTask,
-    deleteTask,
-    compareLists,
-    updateLists,
-}) => {
+const TaskItems = ({ tasks, category, addTask, deleteTask, updateLists }) => {
     const [isDragging, setIsDragging] = useState(null);
     const taskItemsRef = useRef();
 
@@ -21,13 +14,13 @@ const TaskItems = ({
     const [selectedTaskId, setSelectedTaskId] = useState(null);
     const [currentTaskRef, setCurrentTaskRef] = useState(null);
 
-    const handleClickRemove = (taskKey) => {
-        deleteTask(category, taskKey);
+    const handleClickRemove = (taskIndex) => {
+        deleteTask(category, taskIndex);
     };
 
-    const handleDragStart = (e, taskKey) => {
-        // setting state to the task key
-        setIsDragging(taskKey);
+    const handleDragStart = (e, taskIndex) => {
+        // setting state to the task index
+        setIsDragging(taskIndex);
 
         // keep track of the task selected
         setSelectedTask(e.target.innerText);
@@ -43,16 +36,16 @@ const TaskItems = ({
 
         const endingCategoryName = e.target.parentElement.id;
 
-        // move task back to original list before we can delete it
-        // if not we would get an error:
-        // Uncaught DOMException: Failed to execute 'removeChild' on 'Node': The node to be removed is not a child of this node.
-        startingCategoryElement.appendChild(currentTaskRef);
+        // // move task back to original list before we can delete it
+        // // if not we would get an error:
+        // // Uncaught DOMException: Failed to execute 'removeChild' on 'Node': The node to be removed is not a child of this node.
+        // startingCategoryElement.appendChild(currentTaskRef);
 
-        // delete task from original list
-        deleteTask(startingCategoryName, selectedTaskId);
+        // // delete task from original list
+        // deleteTask(startingCategoryName, selectedTaskId);
 
-        // add task to hovered list
-        addTask(endingCategoryName, selectedTask);
+        // // add task to hovered list
+        // addTask(endingCategoryName, selectedTask);
 
         // side note for when I come back and try to implement the free drag and drop and not just the appendChild
 
@@ -66,6 +59,28 @@ const TaskItems = ({
         // append currentTaskRef back to original list
         // deleteTask
         // create a function to set to db
+
+        console.log(e.target.parentElement.children);
+        const listedItems = e.target.parentElement.children;
+        console.log(listedItems);
+        const tempArray = [];
+        for (let item of listedItems) {
+            console.log(item.innerText);
+            tempArray.push(item.innerText);
+        }
+        console.log(tempArray);
+        if (startingCategoryName == endingCategoryName) {
+            updateLists(endingCategoryName, tempArray);
+        } else {
+            // move task back to original list before we can delete it
+            // if not we would get an error:
+            // Uncaught DOMException: Failed to execute 'removeChild' on 'Node': The node to be removed is not a child of this node.
+            startingCategoryElement.appendChild(currentTaskRef);
+            // delete task from original list
+            deleteTask(startingCategoryName, selectedTaskId);
+            // add task to hovered list
+            updateLists(endingCategoryName, tempArray);
+        }
     };
 
     const handleDragOver = (e) => {
@@ -84,15 +99,15 @@ const TaskItems = ({
         setCurrentTaskRef(currentTask);
 
         // append current task to bottom of hovered list
-        taskItemsRef.appendChild(currentTask);
+        // taskItemsRef.appendChild(currentTask);
 
         // "free" drag and drop
-        // if (!bottomTask) {
-        //     // if there is no current bottomTask then we append it to the bottom of the category list
-        //     taskItemsRef.appendChild(currentTask);
-        // } else {
-        //     taskItemsRef.insertBefore(currentTask, bottomTask);
-        // }
+        if (!bottomTask) {
+            // if there is no current bottomTask then we append it to the bottom of the category list
+            taskItemsRef.appendChild(currentTask);
+        } else {
+            taskItemsRef.insertBefore(currentTask, bottomTask);
+        }
     };
 
     const insertAboveTask = (category, mouseY) => {
@@ -129,24 +144,24 @@ const TaskItems = ({
             onDragOver={handleDragOver}
             ref={taskItemsRef}
         >
-            {tasks?.map((task) => {
+            {tasks?.map((task, index) => {
                 return (
                     <div
                         className={`taskItem ${
-                            isDragging === task.key && "isDragging"
+                            isDragging === index && "isDragging"
                         }`}
-                        key={task.key}
-                        id={task.key}
-                        onDragStart={(e) => handleDragStart(e, task.key)}
+                        key={index}
+                        id={index}
+                        onDragStart={(e) => handleDragStart(e, index)}
                         onDragEnd={(e) => handleDragEnd(e)}
                         draggable
                     >
                         <p>
-                            <RxDragHandleHorizontal /> {task.task}
+                            <RxDragHandleHorizontal /> {task}
                         </p>
                         <button
                             className="btn"
-                            onClick={() => handleClickRemove(task.key)}
+                            onClick={() => handleClickRemove(index)}
                         >
                             <RiCloseFill />
                         </button>

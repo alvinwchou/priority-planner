@@ -24,7 +24,7 @@ const Header = ({ userId, logoutUser, addTask }) => {
                     <h1>+</h1>
                 </button>
             </div>
-            <h1 className="title">Daily Planner</h1>
+            <h1 className="title">Priority Planner</h1>
             <h2 className="todaysDate">Date: {date.toDateString()}</h2>
             {showMenu && (
                 <TaskForm
