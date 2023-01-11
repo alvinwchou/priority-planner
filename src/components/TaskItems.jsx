@@ -2,7 +2,7 @@ import { useState, useRef } from "react";
 import { RiCloseFill } from "react-icons/ri";
 import { RxDragHandleHorizontal } from "react-icons/rx";
 
-const TaskItems = ({ tasks, category, addTask, deleteTask, updateLists }) => {
+const TaskItems = ({ tasks, category, deleteTask, updateLists }) => {
     const [isDragging, setIsDragging] = useState(null);
     const taskItemsRef = useRef();
 
@@ -10,7 +10,7 @@ const TaskItems = ({ tasks, category, addTask, deleteTask, updateLists }) => {
     const [startingCategoryName, setStartingCategoryName] = useState(null);
     const [startingCategoryElement, setStartingCategoryElement] =
         useState(null);
-    const [selectedTask, setSelectedTask] = useState(null);
+    // const [selectedTask, setSelectedTask] = useState(null);
     const [selectedTaskId, setSelectedTaskId] = useState(null);
     const [currentTaskRef, setCurrentTaskRef] = useState(null);
 
@@ -23,7 +23,7 @@ const TaskItems = ({ tasks, category, addTask, deleteTask, updateLists }) => {
         setIsDragging(taskIndex);
 
         // keep track of the task selected
-        setSelectedTask(e.target.innerText);
+        // setSelectedTask(e.target.innerText);
         // keep track of the selected task id
         setSelectedTaskId(e.target.id);
         // keep track of which list we started with
@@ -69,7 +69,7 @@ const TaskItems = ({ tasks, category, addTask, deleteTask, updateLists }) => {
             tempArray.push(item.innerText);
         }
         console.log(tempArray);
-        if (startingCategoryName == endingCategoryName) {
+        if (startingCategoryName === endingCategoryName) {
             updateLists(endingCategoryName, tempArray);
         } else {
             // move task back to original list before we can delete it

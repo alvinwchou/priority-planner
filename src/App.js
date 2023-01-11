@@ -6,16 +6,7 @@ import Header from "./components/Header";
 import firebase, { auth } from "./features/firebase/FirebaseConfig";
 import Dashboard from "./pages/Dashboard";
 import LoginRegister from "./pages/LoginRegister";
-import {
-    getDatabase,
-    ref,
-    push,
-    onValue,
-    remove,
-    child,
-    set,
-    update,
-} from "firebase/database";
+import { getDatabase, ref, onValue, remove, set } from "firebase/database";
 
 function App() {
     const [user, setUser] = useState({
@@ -61,14 +52,14 @@ function App() {
                     //     // add to the newPlannerObject
                     //     newPlannerObject[category] = newTasksArray;
                     // }
-                    
+
                     // console.log(newPlannerObject);
 
                     setUser({
                         user: currentUser,
                         userId: currentUser.uid,
                         // planner: newPlannerObject,
-                        planner: data
+                        planner: data,
                     });
                 });
             } else {
@@ -116,8 +107,8 @@ function App() {
 
     // delete task from firebase db
     const deleteTask = (categoryName, taskIndex) => {
-        console.log('delete');
-        console.log({categoryName, taskIndex});
+        console.log("delete");
+        console.log({ categoryName, taskIndex });
         const database = getDatabase(firebase);
         const dbRef = ref(
             database,
@@ -139,7 +130,7 @@ function App() {
         // };
 
         // console.log(newPlanner);
-        
+
         // // Update the state with the new planner object
         // setUser({ ...user, planner: newPlanner });
     };
