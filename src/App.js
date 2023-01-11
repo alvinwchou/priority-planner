@@ -83,8 +83,6 @@ function App() {
 
     // delete task from firebase db
     const deleteTask = (categoryName, taskIndex) => {
-        console.log("delete");
-        console.log({ categoryName, taskIndex });
         const database = getDatabase(firebase);
         const dbRef = ref(
             database,
@@ -99,7 +97,15 @@ function App() {
         const database = getDatabase(firebase);
         const dbRef = ref(database, `users/${user.userId}/${categoryName}`);
 
-        set(dbRef, newListOrder);
+        // normally I would only use set but there was a bug where the db and state is updated but not the ui
+        // my solution is to remove the list then set it again
+        // found that there has to be a delay between the remove and set for this to work
+
+        remove(dbRef);
+
+        setTimeout(() => {
+            set(dbRef, newListOrder);
+        }, 1);
     };
 
     return (

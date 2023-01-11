@@ -7,7 +7,7 @@ const Dashboard = ({ user, addTask, deleteTask, updateLists }) => {
             <div className="dashboardCard priority1">
                 <h2>Priority 1</h2>
                 <TaskItems
-                    tasks={user.planner.priority1}
+                    tasks={user.planner?.priority1}
                     category={"priority1"}
                     addTask={addTask}
                     deleteTask={deleteTask}
@@ -17,7 +17,7 @@ const Dashboard = ({ user, addTask, deleteTask, updateLists }) => {
             <div className="dashboardCard priority2">
                 <h2>Priority 2</h2>
                 <TaskItems
-                    tasks={user.planner.priority2}
+                    tasks={user.planner?.priority2}
                     category={"priority2"}
                     addTask={addTask}
                     deleteTask={deleteTask}
@@ -27,7 +27,7 @@ const Dashboard = ({ user, addTask, deleteTask, updateLists }) => {
             <div className="dashboardCard priority3">
                 <h2>Priority 3</h2>
                 <TaskItems
-                    tasks={user.planner.priority3}
+                    tasks={user.planner?.priority3}
                     category={"priority3"}
                     addTask={addTask}
                     deleteTask={deleteTask}
@@ -37,7 +37,7 @@ const Dashboard = ({ user, addTask, deleteTask, updateLists }) => {
             <div className="dashboardCard notes">
                 <h2>Notes</h2>
                 <TaskItems
-                    tasks={user.planner.notes}
+                    tasks={user.planner?.notes}
                     category={"notes"}
                     addTask={addTask}
                     deleteTask={deleteTask}

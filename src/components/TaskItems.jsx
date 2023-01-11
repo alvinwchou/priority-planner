@@ -36,30 +36,22 @@ const TaskItems = ({ tasks, category, deleteTask, updateLists }) => {
 
         const endingCategoryName = e.target.parentElement.id;
 
-        // case 1 moved within same list (start above line 55)
-        // get the new order push to a temp array
-        // create a function set to db
-
-        // case 2 move to a new list (start from line 55 const endingCategoryName)
-        // get the new order from the hovered list
-        // push to temp array
-        // append currentTaskRef back to original list
-        // deleteTask
-        // create a function to set to db
-
-
+        // getting the children of the list being hovered over
         const listedItems = e.target.parentElement.children;
 
         const tempArray = [];
 
+        // push the task in to tempArray
         for (let item of listedItems) {
-            console.log(item.innerText);
             tempArray.push(item.innerText);
         }
 
+        // if the task is within the same list
         if (startingCategoryName === endingCategoryName) {
+            // update db with the new order of list (tempArray)
             updateLists(endingCategoryName, tempArray);
         } else {
+            // move task to a differnet list
             // move task back to original list before we can delete it
             // if not we would get an error:
             // Uncaught DOMException: Failed to execute 'removeChild' on 'Node': The node to be removed is not a child of this node.
