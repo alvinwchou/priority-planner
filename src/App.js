@@ -31,30 +31,6 @@ function App() {
                 onValue(dbRef, (res) => {
                     const data = res.val();
 
-                    console.log("onValue");
-                    console.log(data);
-
-                    // the task in each categories are in an object
-                    // convert object to an array for easier usage
-                    // since tasks are nested in a category and categories are nested in the data
-                    // we have to use 2 for in loops
-                    // for (let category in data) {
-                    //     console.log(category);
-                    //     const newTasksArray = [];
-
-                    //     for (let key in data[category]) {
-                    //         newTasksArray.push({
-                    //             key: key,
-                    //             task: data[category][key],
-                    //         });
-                    //     }
-
-                    //     // add to the newPlannerObject
-                    //     newPlannerObject[category] = newTasksArray;
-                    // }
-
-                    // console.log(newPlannerObject);
-
                     setUser({
                         user: currentUser,
                         userId: currentUser.uid,
@@ -116,23 +92,6 @@ function App() {
         );
 
         remove(dbRef);
-
-        // the code below was provided by chatgtp, I was having problems with the DOM not rerendering when the last item task of a list was delete.
-
-        // In this revised example, the deleteTask function removes the task from the Firebase database using the remove() method, and then creates a new copy of the planner object with the task removed using the spread operator and the filter() method. The new object is then passed to the setUser() function to update the state. This causes the component to re-render with the updated state, and the DOM reflects the change to the planner object.
-
-        // // Create a new copy of the planner object with the task removed
-        // const newPlanner = {
-        //     ...user.planner,
-        //     [categoryName]: [...user.planner[categoryName]].filter(
-        //         (task) => task.key !== taskIndex
-        //     ),
-        // };
-
-        // console.log(newPlanner);
-
-        // // Update the state with the new planner object
-        // setUser({ ...user, planner: newPlanner });
     };
 
     // update the list to firebase db
