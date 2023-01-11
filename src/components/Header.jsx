@@ -1,7 +1,7 @@
 import { useState } from "react";
 import TaskForm from "./TaskForm";
 
-const Header = ({ userId, logoutUser, addTask }) => {
+const Header = ({ userId, logoutUser, addTask, deleteTask }) => {
     const [showMenu, setShowMenu] = useState(false);
 
     const date = new Date();
@@ -30,6 +30,7 @@ const Header = ({ userId, logoutUser, addTask }) => {
                 <TaskForm
                     logoutUser={logoutUser}
                     addTask={addTask}
+                    deleteTask={deleteTask}
                     catcher={handleClick}
                 />
             )}

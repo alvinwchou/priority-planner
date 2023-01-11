@@ -68,7 +68,7 @@ function App() {
         const tempArray = [];
 
         // get current task in the list
-        const listedItems = user.planner[categoryName];
+        const listedItems = user.planner?.[categoryName];
 
         // push all current items in the the temp array
         listedItems?.forEach((item) => {
@@ -86,7 +86,11 @@ function App() {
         const database = getDatabase(firebase);
         const dbRef = ref(
             database,
-            `users/${user.userId}/${categoryName}/${taskIndex}`
+            // there is no categoryName and no taskIndex remove all list remove user
+            // else just remove the specified task
+            !categoryName && !taskIndex
+                ? `users/${user.userId}`
+                : `users/${user.userId}/${categoryName}/${taskIndex}`
         );
 
         remove(dbRef);
@@ -114,6 +118,7 @@ function App() {
                 userId={user.userId}
                 logoutUser={logoutUser}
                 addTask={addTask}
+                deleteTask={deleteTask}
             />
             <Routes>
                 <Route path="/" element={<LoginRegister />} />

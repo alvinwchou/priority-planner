@@ -4,15 +4,12 @@ import { RxDragHandleHorizontal } from "react-icons/rx";
 
 const TaskItems = ({ tasks, category, deleteTask, updateLists }) => {
     const [isDragging, setIsDragging] = useState(null);
-    const taskItemsRef = useRef();
-
-    // const [startingList, setStartingList] = useState(null)
-    const [startingCategoryName, setStartingCategoryName] = useState(null);
     const [startingCategoryElement, setStartingCategoryElement] =
         useState(null);
-    // const [selectedTask, setSelectedTask] = useState(null);
     const [selectedTaskId, setSelectedTaskId] = useState(null);
     const [currentTaskRef, setCurrentTaskRef] = useState(null);
+
+    const taskItemsRef = useRef();
 
     const handleClickRemove = (taskIndex) => {
         deleteTask(category, taskIndex);
@@ -22,18 +19,17 @@ const TaskItems = ({ tasks, category, deleteTask, updateLists }) => {
         // setting state to the task index
         setIsDragging(taskIndex);
 
-        // keep track of the task selected
-        // setSelectedTask(e.target.innerText);
         // keep track of the selected task id
         setSelectedTaskId(e.target.id);
         // keep track of which list we started with
-        setStartingCategoryName(e.target.parentElement.id);
+        // setStartingCategoryName(e.target.parentElement.id);
         setStartingCategoryElement(e.target.parentElement);
     };
 
     const handleDragEnd = (e) => {
         setIsDragging(null);
 
+        const startingCategoryName = startingCategoryElement.id;
         const endingCategoryName = e.target.parentElement.id;
 
         // getting the children of the list being hovered over
@@ -57,6 +53,7 @@ const TaskItems = ({ tasks, category, deleteTask, updateLists }) => {
             // Uncaught DOMException: Failed to execute 'removeChild' on 'Node': The node to be removed is not a child of this node.
             startingCategoryElement.appendChild(currentTaskRef);
             // delete task from original list
+
             deleteTask(startingCategoryName, selectedTaskId);
             // add task to hovered list
             updateLists(endingCategoryName, tempArray);

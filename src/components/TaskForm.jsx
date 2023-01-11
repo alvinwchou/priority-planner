@@ -3,7 +3,7 @@ import { useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { auth } from "../features/firebase/FirebaseConfig";
 
-const TaskForm = ({ logoutUser, addTask, catcher }) => {
+const TaskForm = ({ logoutUser, addTask, deleteTask, catcher }) => {
     const categoryRef = useRef();
     const taskRef = useRef();
     const navigate = useNavigate();
@@ -24,15 +24,20 @@ const TaskForm = ({ logoutUser, addTask, catcher }) => {
             alert(`Too many task, please delete before adding to ${category}`);
         }
 
-        taskRef.current.focus()
+        taskRef.current.focus();
     };
 
     // submit the form when user hits enter and focus inside textarea
     const handleKeyDownTextarea = (e) => {
         if (e.key === "Enter") {
-            handleSubmit(e)
+            handleSubmit(e);
         }
-    }
+    };
+
+    // remove all task from user
+    const handleClickClearList = () => {
+        deleteTask();
+    };
 
     // event listener for when user clicks outside the form to close form
     const handleClick = (e) => {
@@ -116,6 +121,14 @@ const TaskForm = ({ logoutUser, addTask, catcher }) => {
                         <button>Submit</button>
                     </div>
                 </form>
+                <div className="formGroup formGroupFooter">
+                    <button
+                        className="taskFormClearList"
+                        onClick={handleClickClearList}
+                    >
+                        Clear All List
+                    </button>
+                </div>
                 <div className="formGroup formGroupFooter">
                     <button
                         className="taskFormLogout"
