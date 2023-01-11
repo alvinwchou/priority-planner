@@ -21,6 +21,12 @@
             padding: 0.3rem;
             width: 100%;
         }
+        button {
+            border: 1px solid transparent;
+            &:hover {
+                border: 1px solid white;
+            }
+        }
     }
     .formGroupFooter {
         display: flex;

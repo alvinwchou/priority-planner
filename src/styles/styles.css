@@ -412,6 +412,12 @@ a {
   padding: 0.3rem;
   width: 100%;
 }
+.taskForm .formGroup button {
+  border: 1px solid transparent;
+}
+.taskForm .formGroup button:hover {
+  border: 1px solid white;
+}
 .taskForm .formGroupFooter {
   display: -webkit-box;
   display: -ms-flexbox;

@@ -23,7 +23,16 @@ const TaskForm = ({ logoutUser, addTask, catcher }) => {
         } else {
             alert(`Too many task, please delete before adding to ${category}`);
         }
+
+        taskRef.current.focus()
     };
+
+    // submit the form when user hits enter and focus inside textarea
+    const handleKeyDownTextarea = (e) => {
+        if (e.key === "Enter") {
+            handleSubmit(e)
+        }
+    }
 
     // event listener for when user clicks outside the form to close form
     const handleClick = (e) => {
@@ -63,12 +72,6 @@ const TaskForm = ({ logoutUser, addTask, catcher }) => {
                 taskItemElement.length - 1
             ]?.getBoundingClientRect().bottom || 100;
 
-        console.log({
-            dashboardCardElementBottom,
-            taskItemElementBottom,
-            taskItemElementHeight,
-        });
-
         // if the difference between the bottom of the category card and the bottom of the last task is less then the height of the individual item. not enough space to add more task
         // return true if there is space
         return (
@@ -105,6 +108,7 @@ const TaskForm = ({ logoutUser, addTask, catcher }) => {
                             cols="30"
                             rows="10"
                             ref={taskRef}
+                            onKeyDown={handleKeyDownTextarea}
                             required
                         ></textarea>
                     </div>
