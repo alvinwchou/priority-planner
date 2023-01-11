@@ -26,7 +26,7 @@ function App() {
                 const database = getDatabase(firebase);
                 const dbRef = ref(database, `users/${currentUser.uid}`);
 
-                const newPlannerObject = {};
+                // const newPlannerObject = {};
 
                 onValue(dbRef, (res) => {
                     const data = res.val();
