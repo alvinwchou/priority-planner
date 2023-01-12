@@ -384,6 +384,11 @@ a {
   border-radius: 15px;
   padding: 0.3rem;
   width: 100%;
+  border: 1px solid transparent;
+}
+.login button:hover,
+.register button:hover {
+  border: 1px solid white;
 }
 
 .taskForm {
@@ -439,6 +444,10 @@ a {
   -webkit-box-pack: justify;
       -ms-flex-pack: justify;
           justify-content: space-between;
+}
+.taskItem svg {
+  cursor: -webkit-grab;
+  cursor: grab;
 }
 
 .isDragging {

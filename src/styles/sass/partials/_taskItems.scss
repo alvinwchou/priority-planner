@@ -5,6 +5,9 @@
 .taskItem {
     display: flex;
     justify-content: space-between;
+    svg {
+        cursor: grab;
+    }
 }
 
 .isDragging {
