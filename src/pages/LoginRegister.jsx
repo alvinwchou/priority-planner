@@ -75,50 +75,42 @@ const LoginRegister = () => {
             <form onSubmit={handleSubmitRegister}>
                 <h2>Register</h2>
                 <div className="formGroup">
-                    <label htmlFor="name" className="sr-only">
-                        Name
-                    </label>
+                    <label htmlFor="name">Enter your name</label>
                     <input
                         type="text"
                         name="name"
                         id="name"
-                        placeholder="Enter your name"
+                        // placeholder="Enter your name"
                         ref={registerNameRef}
                     />
                 </div>
                 <div className="formGroup">
-                    <label htmlFor="email" className="sr-only">
-                        Email
-                    </label>
+                    <label htmlFor="email">Enter your email</label>
                     <input
                         type="text"
                         name="email"
                         id="email"
-                        placeholder="Enter your email"
+                        // placeholder="Enter your email"
                         ref={registerEmailRef}
                     />
                 </div>
                 <div className="formGroup">
-                    <label htmlFor="passOne" className="sr-only">
-                        Password
-                    </label>
+                    <label htmlFor="passOne">Enter password</label>
                     <input
                         type="password"
                         name="passOne"
                         id="passOne"
-                        placeholder="Enter password"
+                        // placeholder="Enter password"
                         ref={registerPassOneRef}
                     />
                 </div>
                 <div className="formGroup">
-                    <label htmlFor="passTwo" className="sr-only">
-                        Confirm password
-                    </label>
+                    <label htmlFor="passTwo">Confirm password</label>
                     <input
                         type="password"
                         name="passTwo"
                         id="passTwo"
-                        placeholder="Confirm password"
+                        // placeholder="Confirm password"
                         ref={registerPassTwoRef}
                     />
                 </div>
@@ -135,26 +127,26 @@ const LoginRegister = () => {
             <form onSubmit={handleSubmitLogin}>
                 <h2>Login</h2>
                 <div className="formGroup">
-                    <label htmlFor="email" className="sr-only">
+                    <label htmlFor="email">
                         Email
                     </label>
                     <input
                         type="text"
                         name="email"
                         id="email"
-                        placeholder="Enter your email"
+                        // placeholder="Enter your email"
                         ref={loginEmailRef}
                     />
                 </div>
                 <div className="formGroup">
-                    <label htmlFor="passOne" className="sr-only">
+                    <label htmlFor="passOne">
                         Password
                     </label>
                     <input
                         type="password"
                         name="passOne"
                         id="passOne"
-                        placeholder="Enter password"
+                        // placeholder="Enter password"
                         ref={loginPasswordRef}
                     />
                 </div>
