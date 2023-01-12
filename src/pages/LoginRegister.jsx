@@ -4,7 +4,6 @@ import {
 } from "firebase/auth";
 import { useState } from "react";
 import { useEffect } from "react";
-import { useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import FormError from "../components/FormError";
 import { auth } from "../features/firebase/FirebaseConfig";
@@ -30,7 +29,7 @@ const LoginRegister = ({ userId }) => {
         if (userId) {
             navigate("/dashboard");
         }
-    }, [userId]);
+    }, [userId, navigate]);
 
     const handleSubmitLogin = (e) => {
         e.preventDefault();
