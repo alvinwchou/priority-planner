@@ -121,7 +121,7 @@ function App() {
                 deleteTask={deleteTask}
             />
             <Routes>
-                <Route path="/" element={<LoginRegister />} />
+                <Route path="/" element={<LoginRegister userId={user.userId}/>} />
                 <Route
                     path="/dashboard"
                     element={

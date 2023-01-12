@@ -3,29 +3,41 @@ import {
     createUserWithEmailAndPassword,
 } from "firebase/auth";
 import { useState } from "react";
+import { useEffect } from "react";
 import { useRef } from "react";
 import { useNavigate } from "react-router-dom";
+import FormError from "../components/FormError";
 import { auth } from "../features/firebase/FirebaseConfig";
 
-const LoginRegister = () => {
-    const [isRegister, setIsRegister] = useState(false);
-    // normally I would use state to track user input but I only need the info when the from is submitted. I do not need the component to rerender every time user enters a character
-    const loginEmailRef = useRef();
-    const loginPasswordRef = useRef();
+const LoginRegister = ({ userId }) => {
+    const [loginForm, setLoginForm] = useState({
+        email: "",
+        password: "",
+    });
 
-    const registerNameRef = useRef();
-    const registerEmailRef = useRef();
-    const registerPassOneRef = useRef();
-    const registerPassTwoRef = useRef();
+    const [registrationForm, setRegistrationForm] = useState({
+        email: "",
+        passOne: "",
+        passTwo: "",
+    });
+    const [isRegister, setIsRegister] = useState(false);
+    const [errorMessage, setErrorMessage] = useState(null);
 
     const navigate = useNavigate();
+
+    useEffect(() => {
+        // if there is userId then route to dashboard
+        if (userId) {
+            navigate("/dashboard");
+        }
+    }, [userId]);
 
     const handleSubmitLogin = (e) => {
         e.preventDefault();
 
         const loginInfo = {
-            email: loginEmailRef.current.value,
-            password: loginPasswordRef.current.value,
+            email: loginForm.email,
+            password: loginForm.password,
         };
 
         signInWithEmailAndPassword(auth, loginInfo.email, loginInfo.password)
@@ -34,24 +46,37 @@ const LoginRegister = () => {
                 navigate("/dashboard");
             })
             .catch((error) => {
-                alert(error.message);
+                // alert user of error
+                if (error.message) {
+                    setErrorMessage(error.message);
+                }
             });
+    };
+
+    const handleChangeLogin = (e) => {
+        const itemName = e.target.name;
+        const itemValue = e.target.value;
+
+        setLoginForm({ ...loginForm, [itemName]: itemValue });
+    };
+
+    const handleChangeRegister = (e) => {
+        const itemName = e.target.name;
+        const itemValue = e.target.value;
+        setRegistrationForm({ ...registrationForm, [itemName]: itemValue });
     };
 
     const handleSubmitRegister = (e) => {
         e.preventDefault();
 
         // check if the password match if not alert user
-        if (
-            registerPassOneRef.current.value !==
-            registerPassTwoRef.current.value
-        ) {
-            alert("Passwords do not match");
+        if (registrationForm.passOne !== registrationForm.passTwo) {
+            setErrorMessage("Passwords do not match");
         } else {
             const registrationInfo = {
-                name: registerNameRef.current.value,
-                email: registerEmailRef.current.value,
-                password: registerPassOneRef.current.value,
+                // name: registerNameRef.current.value,
+                email: registrationForm.email,
+                password: registrationForm.passOne,
             };
 
             createUserWithEmailAndPassword(
@@ -65,7 +90,9 @@ const LoginRegister = () => {
                 })
                 .catch((error) => {
                     // alert user of error
-                    alert(error.message);
+                    if (error.message) {
+                        setErrorMessage(error.message);
+                    }
                 });
         }
     };
@@ -75,14 +102,14 @@ const LoginRegister = () => {
             <form onSubmit={handleSubmitRegister}>
                 <h2>Register</h2>
                 <div className="formGroup">
-                    <label htmlFor="name">Enter your name</label>
+                    {/* <label htmlFor="name">Enter your name</label>
                     <input
                         type="text"
                         name="name"
                         id="name"
                         // placeholder="Enter your name"
                         ref={registerNameRef}
-                    />
+                    /> */}
                 </div>
                 <div className="formGroup">
                     <label htmlFor="email">Enter your email</label>
@@ -91,8 +118,18 @@ const LoginRegister = () => {
                         name="email"
                         id="email"
                         // placeholder="Enter your email"
-                        ref={registerEmailRef}
+                        // ref={registerEmailRef}
+                        onChange={handleChangeRegister}
+                        value={registrationForm.email}
                     />
+                    {errorMessage ===
+                        "Firebase: Error (auth/invalid-email)." && (
+                        <FormError errorMessage={errorMessage} />
+                    )}
+                    {errorMessage ===
+                        "Firebase: Error (auth/email-already-in-use)." && (
+                        <FormError errorMessage={errorMessage} />
+                    )}
                 </div>
                 <div className="formGroup">
                     <label htmlFor="passOne">Enter password</label>
@@ -101,8 +138,17 @@ const LoginRegister = () => {
                         name="passOne"
                         id="passOne"
                         // placeholder="Enter password"
-                        ref={registerPassOneRef}
+                        // ref={registerPassOneRef}
+                        onChange={handleChangeRegister}
+                        value={registrationForm.passOne}
                     />
+                    {errorMessage ===
+                        "Firebase: Error (auth/internal-error)." && (
+                        <FormError errorMessage={errorMessage} />
+                    )}
+                    {errorMessage === "Passwords do not match" && (
+                        <FormError errorMessage={errorMessage} />
+                    )}
                 </div>
                 <div className="formGroup">
                     <label htmlFor="passTwo">Confirm password</label>
@@ -111,14 +157,31 @@ const LoginRegister = () => {
                         name="passTwo"
                         id="passTwo"
                         // placeholder="Confirm password"
-                        ref={registerPassTwoRef}
+                        // ref={registerPassTwoRef}
+                        onChange={handleChangeRegister}
+                        value={registrationForm.passTwo}
                     />
+                    {errorMessage === "Passwords do not match" && (
+                        <FormError errorMessage={errorMessage} />
+                    )}
                 </div>
                 <div className="formGroup">
                     <button>Register</button>
                 </div>
                 <div className="formGroup">
-                    <button onClick={() => setIsRegister(false)}>Back</button>
+                    <button
+                        onClick={() => {
+                            setIsRegister(false);
+                            setErrorMessage(null);
+                            setRegistrationForm({
+                                email: "",
+                                passOne: "",
+                                passTwo: "",
+                            });
+                        }}
+                    >
+                        Back
+                    </button>
                 </div>
             </form>
         </div>
@@ -127,34 +190,60 @@ const LoginRegister = () => {
             <form onSubmit={handleSubmitLogin}>
                 <h2>Login</h2>
                 <div className="formGroup">
-                    <label htmlFor="email">
-                        Email
-                    </label>
+                    <label htmlFor="email">Email</label>
                     <input
                         type="text"
                         name="email"
                         id="email"
                         // placeholder="Enter your email"
-                        ref={loginEmailRef}
+                        // ref={loginEmailRef}
+                        onChange={handleChangeLogin}
+                        value={loginForm.email}
                     />
+                    {errorMessage ===
+                        "Firebase: Error (auth/invalid-email)." && (
+                        <FormError errorMessage={errorMessage} />
+                    )}
+                    {errorMessage ===
+                        "Firebase: Error (auth/user-not-found)." && (
+                        <FormError errorMessage={errorMessage} />
+                    )}
                 </div>
                 <div className="formGroup">
-                    <label htmlFor="passOne">
-                        Password
-                    </label>
+                    <label htmlFor="password">Password</label>
                     <input
                         type="password"
-                        name="passOne"
-                        id="passOne"
+                        name="password"
+                        id="password"
                         // placeholder="Enter password"
-                        ref={loginPasswordRef}
+                        // ref={loginPasswordRef}
+                        onChange={handleChangeLogin}
+                        value={loginForm.password}
                     />
+                    {errorMessage ===
+                        "Firebase: Error (auth/internal-error)." && (
+                        <FormError errorMessage={errorMessage} />
+                    )}
+                    {errorMessage ===
+                        "Firebase: Error (auth/wrong-password)." && (
+                        <FormError errorMessage={errorMessage} />
+                    )}
+                    {errorMessage ===
+                        "Firebase: Access to this account has been temporarily disabled due to many failed login attempts. You can immediately restore it by resetting your password or you can try again later. (auth/too-many-requests)." && (
+                        <FormError errorMessage={errorMessage} />
+                    )}
                 </div>
                 <div className="formGroup">
                     <button>Enter</button>
                 </div>
                 <div className="formGroup">
-                    <button onClick={() => setIsRegister(true)}>
+                    <button
+                        onClick={() => {
+                            setIsRegister(true);
+                            setErrorMessage(null);
+                            setLoginForm({ email: "", password: "" });
+                        }}
+                    >
                         Create an Account
                     </button>
                 </div>

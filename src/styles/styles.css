@@ -384,6 +384,11 @@ a {
   border-radius: 15px;
   padding: 0.3rem;
   width: 100%;
+  border: 1px solid transparent;
+}
+.login button:hover,
+.register button:hover {
+  border: 1px solid white;
 }
 
 .taskForm {
@@ -424,6 +429,10 @@ a {
   display: flex;
   gap: 1rem;
   margin: 0 1rem;
+}
+
+.formError p {
+  color: #bb0628;
 }
 
 .taskItems {
