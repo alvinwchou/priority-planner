@@ -106,7 +106,7 @@ const LoginRegister = ({ userId }) => {
                         type="text"
                         name="name"
                         id="name"
-                        // placeholder="Enter your name"
+                        placeholder="Enter your name"
                         ref={registerNameRef}
                     /> */}
                 </div>
@@ -116,7 +116,7 @@ const LoginRegister = ({ userId }) => {
                         type="text"
                         name="email"
                         id="email"
-                        // placeholder="Enter your email"
+                        placeholder="Enter your email"
                         // ref={registerEmailRef}
                         onChange={handleChangeRegister}
                         value={registrationForm.email}
@@ -136,7 +136,7 @@ const LoginRegister = ({ userId }) => {
                         type="password"
                         name="passOne"
                         id="passOne"
-                        // placeholder="Enter password"
+                        placeholder="Enter password"
                         // ref={registerPassOneRef}
                         onChange={handleChangeRegister}
                         value={registrationForm.passOne}
@@ -155,7 +155,7 @@ const LoginRegister = ({ userId }) => {
                         type="password"
                         name="passTwo"
                         id="passTwo"
-                        // placeholder="Confirm password"
+                        placeholder="Confirm password"
                         // ref={registerPassTwoRef}
                         onChange={handleChangeRegister}
                         value={registrationForm.passTwo}
@@ -194,7 +194,7 @@ const LoginRegister = ({ userId }) => {
                         type="text"
                         name="email"
                         id="email"
-                        // placeholder="Enter your email"
+                        placeholder="Enter your email"
                         // ref={loginEmailRef}
                         onChange={handleChangeLogin}
                         value={loginForm.email}
@@ -214,7 +214,7 @@ const LoginRegister = ({ userId }) => {
                         type="password"
                         name="password"
                         id="password"
-                        // placeholder="Enter password"
+                        placeholder="Enter password"
                         // ref={loginPasswordRef}
                         onChange={handleChangeLogin}
                         value={loginForm.password}
