@@ -33,9 +33,9 @@ const TaskItems = ({ tasks, category, deleteTask, updateLists }) => {
         const endingCategoryName = e.target.parentElement.id;
 
         // getting the children of the list being hovered over
-        const listedItems = e.target.parentElement.children;
+        let listedItems = e.target.parentElement.children;
 
-        const tempArray = [];
+        let tempArray = [];
 
         // push the task in to tempArray
         for (let item of listedItems) {
@@ -53,10 +53,27 @@ const TaskItems = ({ tasks, category, deleteTask, updateLists }) => {
             // Uncaught DOMException: Failed to execute 'removeChild' on 'Node': The node to be removed is not a child of this node.
             startingCategoryElement.appendChild(currentTaskRef);
             // delete task from original list
-
             deleteTask(startingCategoryName, selectedTaskId);
             // add task to hovered list
             updateLists(endingCategoryName, tempArray);
+
+            // I was getting TypeError: tasks.map is not a function
+            // found out that after deleting the task, the array holding the tasks
+            // would have a null at the index where the task was removed
+            // my solution is to update the list again 
+            // getting the children of the original list
+            listedItems = startingCategoryElement.children;
+
+            tempArray = [];
+
+            // push the task in to tempArray
+            for (let item of listedItems) {
+                tempArray.push(item.innerText);
+            }
+            // the last index is the item being dragged away
+            // we need to delete it from the array
+            tempArray.pop()
+            updateLists(startingCategoryName, tempArray);
         }
     };
 
