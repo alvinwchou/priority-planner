@@ -118,7 +118,7 @@ const TaskItems = ({ tasks, category, deleteTask, updateLists }) => {
             onDragOver={handleDragOver}
             ref={taskItemsRef}
         >
-            {tasks?.map((task, index) => {
+            {tasks.map((task, index) => {
                 return (
                     <div
                         className={`taskItem ${
