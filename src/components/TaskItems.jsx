@@ -11,8 +11,30 @@ const TaskItems = ({ tasks, category, deleteTask, updateLists }) => {
 
     // const taskItemsRef = useRef();
 
-    const handleClickRemove = (taskIndex) => {
+    const handleClickRemove = (e, taskIndex, task) => {
         deleteTask(category, taskIndex);
+        console.log(e);
+        // find the category that the task is being hovered over
+        const taskItemsRef = e.target.closest(".taskItems");
+
+        // I was getting TypeError: tasks.map is not a function
+        // found out that after deleting/moving the task, the array holding the tasks
+        // would have a null at the index where the task was removed
+        // my solution is to update the list again
+        // getting the children of the original list
+        const listedItems = taskItemsRef.children;
+
+        const tempArray = [];
+
+        // push the task in to tempArray
+        for (let item of listedItems) {
+            tempArray.push(item.innerText);
+        }
+        // we have to locate the index of the task and remove it from the temp array
+        // we need to delete it from the array
+        const index = tempArray.indexOf(` ${task}`);
+        tempArray.splice(index, 1);
+        updateLists(category, tempArray);
     };
 
     const handleDragStart = (e, taskIndex) => {
@@ -58,9 +80,9 @@ const TaskItems = ({ tasks, category, deleteTask, updateLists }) => {
             updateLists(endingCategoryName, tempArray);
 
             // I was getting TypeError: tasks.map is not a function
-            // found out that after deleting the task, the array holding the tasks
+            // found out that after deleting/moving the task, the array holding the tasks
             // would have a null at the index where the task was removed
-            // my solution is to update the list again 
+            // my solution is to update the list again
             // getting the children of the original list
             listedItems = startingCategoryElement.children;
 
@@ -70,9 +92,10 @@ const TaskItems = ({ tasks, category, deleteTask, updateLists }) => {
             for (let item of listedItems) {
                 tempArray.push(item.innerText);
             }
-            // the last index is the item being dragged away
+            // the last index is the item being dragged away because we append it back after dragEnd (line 76)
             // we need to delete it from the array
-            tempArray.pop()
+            tempArray.pop();
+            console.log(tempArray);
             updateLists(startingCategoryName, tempArray);
         }
     };
@@ -152,7 +175,7 @@ const TaskItems = ({ tasks, category, deleteTask, updateLists }) => {
                         </p>
                         <button
                             className="btn"
-                            onClick={() => handleClickRemove(index)}
+                            onClick={(e) => handleClickRemove(e, index, task)}
                         >
                             <RiCloseFill />
                         </button>
