@@ -9,7 +9,7 @@ const TaskItems = ({ tasks, category, deleteTask, updateLists }) => {
     const [selectedTaskId, setSelectedTaskId] = useState(null);
     const [currentTaskRef, setCurrentTaskRef] = useState(null);
 
-    const taskItemsRef = useRef();
+    // const taskItemsRef = useRef();
 
     const handleClickRemove = (taskIndex) => {
         deleteTask(category, taskIndex);
@@ -116,9 +116,9 @@ const TaskItems = ({ tasks, category, deleteTask, updateLists }) => {
             className="taskItems"
             id={category}
             onDragOver={handleDragOver}
-            ref={taskItemsRef}
+            // ref={taskItemsRef}
         >
-            {tasks.map((task, index) => {
+            {tasks?.map((task, index) => {
                 return (
                     <div
                         className={`taskItem ${

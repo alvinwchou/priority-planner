@@ -3,7 +3,7 @@ import {
     createUserWithEmailAndPassword,
 } from "firebase/auth";
 import { useState } from "react";
-// import { useEffect } from "react";
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import FormError from "../components/FormError";
 import { auth } from "../features/firebase/FirebaseConfig";
@@ -24,12 +24,12 @@ const LoginRegister = ({ userId }) => {
 
     const navigate = useNavigate();
 
-    // useEffect(() => {
-    //     // if there is userId then route to dashboard
-    //     if (userId) {
-    //         navigate("/dashboard");
-    //     }
-    // }, [userId, navigate]);
+    useEffect(() => {
+        // if there is userId then route to dashboard
+        if (userId) {
+            navigate("/dashboard");
+        }
+    }, [userId, navigate]);
 
     const handleSubmitLogin = (e) => {
         e.preventDefault();
