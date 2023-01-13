@@ -23,10 +23,8 @@ function FormError({ errorMessage }) {
             {errorMessage ===
                 "Firebase: Access to this account has been temporarily disabled due to many failed login attempts. You can immediately restore it by resetting your password or you can try again later. (auth/too-many-requests)." && (
                 <p>
-                    Firebase: Access to this account has been temporarily
-                    disabled due to many failed login attempts. You can
-                    immediately restore it by resetting your password or you can
-                    try again later.
+                    Access to this account has been temporarily
+                    disabled due to many failed login attempts. Try again later.
                 </p>
             )}
         </div>

@@ -285,7 +285,7 @@ select {
 }
 
 input {
-  color: black;
+  color: white;
 }
 
 a {
@@ -371,12 +371,45 @@ a {
 .login .formGroup,
 .register .formGroup {
   margin-top: 1.5rem;
+  position: relative;
 }
 .login .formGroup input,
 .register .formGroup input {
+  background-color: rgb(26, 25, 30);
   border-radius: 15px;
   padding: 0.3rem;
   width: 100%;
+  border: 3px solid rgb(110, 110, 110);
+}
+.login .formGroup input:focus,
+.register .formGroup input:focus {
+  outline: none;
+  border: 3px solid white;
+}
+.login .formGroup input:focus ~ label,
+.register .formGroup input:focus ~ label {
+  -webkit-transform: translateY(calc(-50% - 0.3rem)) scale(0.8);
+          transform: translateY(calc(-50% - 0.3rem)) scale(0.8);
+  color: white;
+  background-color: rgb(26, 25, 30);
+  padding: 0 0.2rem;
+}
+.login .formGroup label,
+.register .formGroup label {
+  position: absolute;
+  left: 1rem;
+  top: 0.3rem;
+  color: rgb(110, 110, 110);
+  -webkit-transition: all 0.1s ease-out;
+  transition: all 0.1s ease-out;
+}
+.login .formGroup .notEmpty,
+.register .formGroup .notEmpty {
+  -webkit-transform: translateY(calc(-50% - 0.3rem)) scale(0.8);
+          transform: translateY(calc(-50% - 0.3rem)) scale(0.8);
+  color: white;
+  background-color: rgb(26, 25, 30);
+  padding: 0 0.2rem;
 }
 .login button,
 .register button {

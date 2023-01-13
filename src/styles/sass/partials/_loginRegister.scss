@@ -13,12 +13,37 @@
 
     .formGroup {
         margin-top: 1.5rem;
-
+        position: relative;
         input {
-            // background-color: rgb(26, 25, 30);
+            background-color: rgb(26, 25, 30);
             border-radius: 15px;
             padding: 0.3rem;
             width: 100%;
+            border: 3px solid rgb(110, 110, 110);
+            &:focus {
+                outline: none;
+                border: 3px solid white;
+            }
+            &:focus ~ label {
+                transform: translateY(calc(-50% - 0.3rem)) scale(0.8);
+                color: white;
+                background-color: rgb(26, 25, 30);
+                padding: 0 0.2rem;
+            }
+        }
+        label {
+            position: absolute;
+            left: 1rem;
+            top: 0.3rem;
+            color: rgb(110, 110, 110);
+            // transform: translateY(1rem);
+            transition: all 0.1s ease-out;
+        }
+        .notEmpty {
+            transform: translateY(calc(-50% - 0.3rem)) scale(0.8);
+                color: white;
+                background-color: rgb(26, 25, 30);
+                padding: 0 0.2rem;
         }
     }
 

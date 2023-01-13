@@ -111,16 +111,21 @@ const LoginRegister = ({ userId }) => {
                     /> */}
                 </div>
                 <div className="formGroup">
-                    <label htmlFor="email">Enter your email</label>
                     <input
                         type="text"
                         name="email"
                         id="email"
-                        placeholder="Enter your email"
+                        // placeholder="Enter your email"
                         // ref={registerEmailRef}
                         onChange={handleChangeRegister}
                         value={registrationForm.email}
                     />
+                    <label
+                        htmlFor="email"
+                        className={registrationForm.email && "notEmpty"}
+                    >
+                        Enter your email
+                    </label>
                     {errorMessage ===
                         "Firebase: Error (auth/invalid-email)." && (
                         <FormError errorMessage={errorMessage} />
@@ -131,16 +136,21 @@ const LoginRegister = ({ userId }) => {
                     )}
                 </div>
                 <div className="formGroup">
-                    <label htmlFor="passOne">Enter password</label>
                     <input
                         type="password"
                         name="passOne"
                         id="passOne"
-                        placeholder="Enter password"
+                        // placeholder="Enter password"
                         // ref={registerPassOneRef}
                         onChange={handleChangeRegister}
                         value={registrationForm.passOne}
                     />
+                    <label
+                        htmlFor="passOne"
+                        className={registrationForm.passOne && "notEmpty"}
+                    >
+                        Enter password
+                    </label>
                     {errorMessage ===
                         "Firebase: Error (auth/internal-error)." && (
                         <FormError errorMessage={errorMessage} />
@@ -150,16 +160,21 @@ const LoginRegister = ({ userId }) => {
                     )}
                 </div>
                 <div className="formGroup">
-                    <label htmlFor="passTwo">Confirm password</label>
                     <input
                         type="password"
                         name="passTwo"
                         id="passTwo"
-                        placeholder="Confirm password"
+                        // placeholder="Confirm password"
                         // ref={registerPassTwoRef}
                         onChange={handleChangeRegister}
                         value={registrationForm.passTwo}
                     />
+                    <label
+                        htmlFor="passTwo"
+                        className={registrationForm.passTwo && "notEmpty"}
+                    >
+                        Confirm password
+                    </label>
                     {errorMessage === "Passwords do not match" && (
                         <FormError errorMessage={errorMessage} />
                     )}
@@ -189,16 +204,21 @@ const LoginRegister = ({ userId }) => {
             <form onSubmit={handleSubmitLogin}>
                 <h2>Login</h2>
                 <div className="formGroup">
-                    <label htmlFor="email">Email</label>
                     <input
                         type="text"
                         name="email"
                         id="email"
-                        placeholder="Enter your email"
+                        // placeholder="Enter your email"
                         // ref={loginEmailRef}
                         onChange={handleChangeLogin}
                         value={loginForm.email}
                     />
+                    <label
+                        htmlFor="email"
+                        className={loginForm.email && "notEmpty"}
+                    >
+                        Email
+                    </label>
                     {errorMessage ===
                         "Firebase: Error (auth/invalid-email)." && (
                         <FormError errorMessage={errorMessage} />
@@ -209,16 +229,21 @@ const LoginRegister = ({ userId }) => {
                     )}
                 </div>
                 <div className="formGroup">
-                    <label htmlFor="password">Password</label>
                     <input
                         type="password"
                         name="password"
                         id="password"
-                        placeholder="Enter password"
+                        // placeholder="Enter password"
                         // ref={loginPasswordRef}
                         onChange={handleChangeLogin}
                         value={loginForm.password}
                     />
+                    <label
+                        htmlFor="password"
+                        className={loginForm.password && "notEmpty"}
+                    >
+                        Password
+                    </label>
                     {errorMessage ===
                         "Firebase: Error (auth/internal-error)." && (
                         <FormError errorMessage={errorMessage} />
