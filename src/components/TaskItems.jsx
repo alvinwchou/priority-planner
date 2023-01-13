@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState } from "react";
 import { RiCloseFill } from "react-icons/ri";
 import { RxDragHandleHorizontal } from "react-icons/rx";
 
