@@ -5,7 +5,7 @@ const Dashboard = ({ user, addTask, deleteTask, updateLists }) => {
     return (
         <div className="dashboard">
             <div className="dashboardCard priority1">
-                <h2>Priority 1</h2>
+                <h2>Top priorities</h2>
                 <TaskItems
                     tasks={user.planner?.priority1}
                     category={"priority1"}
@@ -15,7 +15,7 @@ const Dashboard = ({ user, addTask, deleteTask, updateLists }) => {
                 />
             </div>
             <div className="dashboardCard priority2">
-                <h2>Priority 2</h2>
+                <h2>Reminders</h2>
                 <TaskItems
                     tasks={user.planner?.priority2}
                     category={"priority2"}
@@ -25,7 +25,7 @@ const Dashboard = ({ user, addTask, deleteTask, updateLists }) => {
                 />
             </div>
             <div className="dashboardCard priority3">
-                <h2>Priority 3</h2>
+                <h2>To do</h2>
                 <TaskItems
                     tasks={user.planner?.priority3}
                     category={"priority3"}

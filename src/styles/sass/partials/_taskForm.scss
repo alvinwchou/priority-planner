@@ -1,4 +1,4 @@
-.taskForm{
+.taskForm {
     position: fixed;
     top: 0;
     bottom: 0;
@@ -8,29 +8,44 @@
     backdrop-filter: blur(5px);
     display: grid;
     place-items: center;
+
     form {
-        background-color: #000;
+        // background-color: #000;
+        background-color: rgb(179, 143, 251);
         padding: 0.5rem 1rem;
         border-radius: 15px;
+        border: 5px solid rgb(111, 32, 77);
     }
+
     .formGroup {
         padding: 0.5rem 0;
-        select, textarea, button {
-            background-color: rgb(26, 25, 30);
+
+        select,
+        textarea,
+        button {
+            background-color: rgb(255, 248, 238);
             border-radius: 15px;
             padding: 0.3rem;
             width: 100%;
         }
+
         button {
-            border: 1px solid transparent;
+            background-color: rgb(255, 184, 76);
+            border: 3px solid transparent;
+
             &:hover {
-                border: 1px solid white;
+                border: 3px solid white;
             }
         }
     }
+
     .formGroupFooter {
         display: flex;
         gap: 1rem;
         margin: 0 1rem;
     }
+}
+
+.taskFromContainer {
+    padding: 15px;
 }

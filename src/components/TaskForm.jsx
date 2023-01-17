@@ -79,8 +79,9 @@ const TaskForm = ({ logoutUser, addTask, deleteTask, catcher }) => {
 
         // if the difference between the bottom of the category card and the bottom of the last task is less then the height of the individual item. not enough space to add more task
         // return true if there is space
+        // the - 15 is from the padding
         return (
-            dashboardCardElementBottom - taskItemElementBottom >
+            dashboardCardElementBottom - taskItemElementBottom - 15 >
             taskItemElementHeight
         );
     };
@@ -99,9 +100,9 @@ const TaskForm = ({ logoutUser, addTask, deleteTask, catcher }) => {
                             ref={categoryRef}
                             required
                         >
-                            <option value="priority1">Priority 1</option>
-                            <option value="priority2">Priority 2</option>
-                            <option value="priority3">Priority 3</option>
+                            <option value="priority1">Top Priorities </option>
+                            <option value="priority2">Reminders</option>
+                            <option value="priority3">To do</option>
                             <option value="notes">Notes</option>
                         </select>
                     </div>

@@ -6,7 +6,8 @@
     form {
         width: max(300px, 50%);
         margin: 0 auto;
-        background-color: rgb(26, 25, 30);
+        // background-color: rgb(26, 25, 30);
+        background-color: rgb(179, 143, 251);
         border-radius: 15px;
         padding: 15px;
     }
@@ -14,47 +15,52 @@
     .formGroup {
         margin-top: 1.5rem;
         position: relative;
+
         input {
-            background-color: rgb(26, 25, 30);
+            background-color: rgb(179, 143, 251);
             border-radius: 15px;
             padding: 0.3rem;
             width: 100%;
-            border: 3px solid rgb(110, 110, 110);
+            border: 3px solid rgb(255, 184, 76);
+
             &:focus {
                 outline: none;
                 border: 3px solid white;
             }
-            &:focus ~ label {
+
+            &:focus~label {
                 transform: translateY(calc(-50% - 0.3rem)) scale(0.8);
                 color: white;
-                background-color: rgb(26, 25, 30);
+                background-color: rgb(179, 143, 251);
                 padding: 0 0.2rem;
             }
         }
+
         label {
             position: absolute;
             left: 1rem;
             top: 0.3rem;
-            color: rgb(110, 110, 110);
-            // transform: translateY(1rem);
+            color: rgb(255, 184, 76);
             transition: all 0.1s ease-out;
         }
+
         .notEmpty {
             transform: translateY(calc(-50% - 0.3rem)) scale(0.8);
-                color: white;
-                background-color: rgb(26, 25, 30);
-                padding: 0 0.2rem;
+            color: white;
+            background-color: rgb(179, 143, 251);
+            padding: 0 0.2rem;
         }
     }
 
     button {
-        background-color: black;
+        background-color: rgb(255, 184, 76);
         border-radius: 15px;
         padding: 0.3rem;
         width: 100%;
-        border: 1px solid transparent;
+        border: 3px solid transparent;
+
         &:hover {
-            border: 1px solid white;
+            border: 3px solid white;
         }
     }
 }

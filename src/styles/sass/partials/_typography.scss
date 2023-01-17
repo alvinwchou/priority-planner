@@ -1,27 +1,48 @@
 * {
-    color: #fff;
+    color: rgb(111, 32, 77);
 }
 
-.priority1 h2 {
-    color: rgb(255, 69, 57)
-}
+// .priority1 h2 {
+//     color: rgb(255, 69, 57)
+// }
 
-.priority2 h2 {
-    color: rgb(254, 215, 16)
-}
+// .priority2 h2 {
+//     color: rgb(254, 215, 16)
+// }
 
-.priority3 h2 {
-    color: rgb(26, 132, 254)
-}
+// .priority3 h2 {
+//     color: rgb(26, 132, 254)
+// }
 
+// .notes h2 {
+//     color: #fff
+// }
+.title,
+.priority1 h2,
+.priority2 h2,
+.priority3 h2,
 .notes h2 {
-    color: #fff
+    text-align: center;
+    text-transform: uppercase;
 }
 
-input {
-    color: white;
+p {
+    text-transform: capitalize;
 }
+
+// input {
+//     color: white;
+// }
 
 a {
     text-align: center;
+}
+
+button {
+    font-weight: 700;
+}
+
+select,
+option {
+    text-transform: uppercase;
 }

@@ -9,17 +9,16 @@ const TaskItems = ({ tasks, category, deleteTask, updateLists }) => {
     const [selectedTaskId, setSelectedTaskId] = useState(null);
     const [currentTaskRef, setCurrentTaskRef] = useState(null);
 
-    // const taskItemsRef = useRef();
-
     const handleClickRemove = (e, taskIndex, task) => {
         deleteTask(category, taskIndex);
-        console.log(e);
+
         // find the category that the task is being hovered over
         const taskItemsRef = e.target.closest(".taskItems");
 
         // I was getting TypeError: tasks.map is not a function
         // found out that after deleting/moving the task, the array holding the tasks
         // would have a null at the index where the task was removed
+        // [null, null, "task", "task"]
         // my solution is to update the list again
         // getting the children of the original list
         const listedItems = taskItemsRef.children;
@@ -82,6 +81,7 @@ const TaskItems = ({ tasks, category, deleteTask, updateLists }) => {
             // I was getting TypeError: tasks.map is not a function
             // found out that after deleting/moving the task, the array holding the tasks
             // would have a null at the index where the task was removed
+            // [null, null, "task", "task"]
             // my solution is to update the list again
             // getting the children of the original list
             listedItems = startingCategoryElement.children;
@@ -95,7 +95,6 @@ const TaskItems = ({ tasks, category, deleteTask, updateLists }) => {
             // the last index is the item being dragged away because we append it back after dragEnd (line 76)
             // we need to delete it from the array
             tempArray.pop();
-            console.log(tempArray);
             updateLists(startingCategoryName, tempArray);
         }
     };
@@ -170,9 +169,8 @@ const TaskItems = ({ tasks, category, deleteTask, updateLists }) => {
                         onDragEnd={(e) => handleDragEnd(e)}
                         draggable
                     >
-                        <p>
-                            <RxDragHandleHorizontal /> {task}
-                        </p>
+                        <RxDragHandleHorizontal />
+                        <p>{task}</p>
                         <button
                             className="btn"
                             onClick={(e) => handleClickRemove(e, index, task)}

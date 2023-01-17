@@ -1,12 +1,22 @@
 .taskItems {
     flex: 1 1 auto;
+    padding: 15px;
+    background-color: rgb(255, 248, 238);
+    border-radius: 0 0 15px 15px;
+    border: 5px solid rgb(111, 32, 77);
 }
 
 .taskItem {
     display: flex;
     justify-content: space-between;
-    svg {
+
+    svg:first-child {
         cursor: grab;
+    }
+
+    p {
+        flex-grow: 2;
+        padding: 0 15px;
     }
 }
 
