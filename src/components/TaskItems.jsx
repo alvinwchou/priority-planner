@@ -68,7 +68,7 @@ const TaskItems = ({ tasks, category, deleteTask, updateLists }) => {
             // update db with the new order of list (tempArray)
             updateLists(endingCategoryName, tempArray);
         } else {
-            // move task to a differnet list
+            // move task to a different list
             // move task back to original list before we can delete it
             // if not we would get an error:
             // Uncaught DOMException: Failed to execute 'removeChild' on 'Node': The node to be removed is not a child of this node.
@@ -169,7 +169,9 @@ const TaskItems = ({ tasks, category, deleteTask, updateLists }) => {
                         onDragEnd={(e) => handleDragEnd(e)}
                         draggable
                     >
-                        <RxDragHandleHorizontal />
+                        <div className="grabIconContainer">
+                            <RxDragHandleHorizontal />
+                        </div>
                         <p>{task}</p>
                         <button
                             className="btn"

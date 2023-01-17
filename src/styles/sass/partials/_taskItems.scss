@@ -10,13 +10,20 @@
     display: flex;
     justify-content: space-between;
 
-    svg:first-child {
-        cursor: grab;
-    }
+
 
     p {
         flex-grow: 2;
         padding: 0 15px;
+    }
+}
+
+.grabIconContainer {
+    display: flex;
+    align-items: center;
+
+    svg {
+        cursor: grab;
     }
 }
 

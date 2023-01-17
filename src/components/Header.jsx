@@ -19,7 +19,7 @@ const Header = ({ userId, logoutUser, addTask, deleteTask }) => {
 
     return (
         <div className="header">
-            <div>
+            <div className="menuContainer">
                 <button onClick={() => handleClick("toggle")}>
                     <h1>+</h1>
                 </button>
