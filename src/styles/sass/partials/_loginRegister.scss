@@ -25,12 +25,12 @@
 
             &:focus {
                 outline: none;
-                border: 3px solid white;
+                border: 3px solid rgb(111, 32, 77);
             }
 
             &:focus~label {
                 transform: translateY(calc(-50% - 0.3rem)) scale(0.8);
-                color: white;
+                color: rgb(111, 32, 77);
                 background-color: rgb(179, 143, 251);
                 padding: 0 0.2rem;
             }
@@ -46,7 +46,7 @@
 
         .notEmpty {
             transform: translateY(calc(-50% - 0.3rem)) scale(0.8);
-            color: white;
+            color: rgb(111, 32, 77);
             background-color: rgb(179, 143, 251);
             padding: 0 0.2rem;
         }
@@ -60,7 +60,7 @@
         border: 3px solid transparent;
 
         &:hover {
-            border: 3px solid white;
+            border: 3px solid rgb(111, 32, 77);
         }
     }
 }
